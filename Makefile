@@ -1,3 +1,15 @@
+#******************************************************************************#
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
+#    Updated: 2016/01/11 14:27:05 by llapillo         ###   ########.fr        #
+#                                                                              #
+#******************************************************************************#
+
 NAME	=	avm
 
 CC		=	c++
@@ -10,7 +22,8 @@ DOBJ	=	./objects/
 
 DINC	=	./includes/
 
-SRC		=	main.cpp
+SRC		=	AOperand.template.cpp					\
+			main.cpp
 
 OBJ		=	$(patsubst %.cpp, $(DOBJ)%.o, $(SRC))
 
