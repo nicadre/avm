@@ -1,17 +1,16 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   AOperand.template.cpp                              :+:      :+:    :+:   //
+//   Int8.class.cpp                                     :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2016/01/11 14:21:24 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 15:52:37 by llapillo         ###   ########.fr       //
+//   Created: 2016/01/11 15:17:34 by llapillo          #+#    #+#             //
+//   Updated: 2016/01/11 15:55:32 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-#include <cstdint>
-#include "AOperand.template.hpp"
+#include "Int8.class.hpp"
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -19,37 +18,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-AOperand< T >::AOperand() {}
+Int8::Int8() {}
 
-template< typename T >
-AOperand< T >::AOperand(AOperand< T > const & src) {
+Int8::Int8(Int8 const & src) {
 
 	*this = src;
 
 }
 
-template< typename T >
-AOperand< T >::AOperand(std::string const & value, eOperandType const & type) {
-
-// check under/overflow
-/*
-  double d = std::stod(value); // return double, throw exception if under/overflow
-  if type == Int* {
-    if d - static_cast< long long >(d) != 0.0 {
-	  throw();
-	}
-  }
-  switch type {
-  case Int8:
-    if !(static_cast< double>(INT8_MIN) <= d <= static_cast< double>(INT8_MAX)) {
-	throw()
-	}
-	this->_value = stoT(value);
-	...
-  }
- */
-}
+Int8::Int8(std::string const & value) :
+	AOperand< int8_t >(value, IOperand::eOperandType::Int8) {}
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -57,15 +35,9 @@ AOperand< T >::AOperand(std::string const & value, eOperandType const & type) {
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-int								AOperand< T >::getPrecision(void) const {
+IOperand::eOperandType		Int8::getType(void) const {
 
-	return (static_cast< int >(this->getType()));
-
-}
-
-template< typename T >
-std::string			const	&	AOperand< T >::toString(void) const {
+	return (IOperand::eOperandType::Int8);
 
 }
 
@@ -82,37 +54,11 @@ std::string			const	&	AOperand< T >::toString(void) const {
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-IOperand			const	*	AOperand< T >::operator+(IOperand const & rhs) const {
+Int8				&	Int8::operator=(Int8 const & rhs) {
 
-}
-
-template< typename T >
-IOperand			const	*	AOperand< T >::operator-(IOperand const & rhs) const {
-}
-
-template< typename T >
-IOperand			const	*	AOperand< T >::operator*(IOperand const & rhs) const {
-}
-
-template< typename T >
-IOperand			const	*	AOperand< T >::operator/(IOperand const & rhs) const {
-}
-
-template< typename T >
-IOperand			const	*	AOperand< T >::operator%(IOperand const & rhs) const {
-}
-
-template< typename T >
-AOperand< T >				&	AOperand< T >::operator=(AOperand< T > const &) {
 
 	return *this;
 
-}
-
-template< typename T >
-std::ostream				&	operator<<(std::ostream & o, AOperand< T > const & rhs) {
-	return	o;
 }
 
 /* ************************************************************************** */
@@ -121,8 +67,7 @@ std::ostream				&	operator<<(std::ostream & o, AOperand< T > const & rhs) {
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-AOperand< T >::~AOperand() {}
+Int8::~Int8() {}
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -130,17 +75,5 @@ AOperand< T >::~AOperand() {}
 /*                                                                            */
 /* ************************************************************************** */
 
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                           Template Declarations                            */
-/*                                                                            */
-/* ************************************************************************** */
-
-template class AOperand< int8_t >;
-template class AOperand< int16_t >;
-template class AOperand< int32_t >;
-template class AOperand< float >;
-template class AOperand< double >;
 
 /* ************************************************************************** */
