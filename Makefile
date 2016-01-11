@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/11 18:17:56 by llapillo         ###   ########.fr        #
+#    Updated: 2016/01/11 18:34:53 by llapillo         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ NAME	=	avm
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++1z          -Wno-unused-parameter
+FLAGS	=	-Wall -Wextra -Werror -std=c++1z#          -Wno-unused-parameter
 
 DSRC	=	./sources/
 

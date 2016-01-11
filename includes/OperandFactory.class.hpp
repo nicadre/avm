@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 16:10:27 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 18:07:09 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/11 18:37:29 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -38,7 +38,7 @@ private:
 	IOperand	const				*	createFloat(std::string const & value) const;
 	IOperand	const				*	createDouble(std::string const & value) const;
 
-	OperandFactory					&	operator=(OperandFactory const & rhs);
+	OperandFactory					&	operator=(OperandFactory const &);
 
 public:
 

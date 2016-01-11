@@ -1,3 +1,15 @@
+// ************************************************************************** //
+//                                                                            //
+//                                                        :::      ::::::::   //
+//   Float.class.cpp                                    :+:      :+:    :+:   //
+//                                                    +:+ +:+         +:+     //
+//   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
+//                                                +#+#+#+#+#+   +#+           //
+//   Created: 2016/01/11 18:36:29 by llapillo          #+#    #+#             //
+//   Updated: 2016/01/11 18:36:40 by llapillo         ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
+
 #include "Float.class.hpp"
 
 /* ************************************************************************** */
@@ -45,6 +57,7 @@ IOperand::eOperandType		Float::getType(void) const {
 
 Float				&	Float::operator=(Float const & rhs) {
 
+	AOperand< float >::operator=(rhs);
 
 	return *this;
 

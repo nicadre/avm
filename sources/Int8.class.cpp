@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 15:17:34 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 15:55:32 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/11 18:35:53 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -56,6 +56,7 @@ IOperand::eOperandType		Int8::getType(void) const {
 
 Int8				&	Int8::operator=(Int8 const & rhs) {
 
+	AOperand< int8_t >::operator=(rhs);
 
 	return *this;
 

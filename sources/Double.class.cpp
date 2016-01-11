@@ -1,3 +1,15 @@
+// ************************************************************************** //
+//                                                                            //
+//                                                        :::      ::::::::   //
+//   Double.class.cpp                                   :+:      :+:    :+:   //
+//                                                    +:+ +:+         +:+     //
+//   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
+//                                                +#+#+#+#+#+   +#+           //
+//   Created: 2016/01/11 18:36:49 by llapillo          #+#    #+#             //
+//   Updated: 2016/01/11 18:36:59 by llapillo         ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
+
 #include "Double.class.hpp"
 
 /* ************************************************************************** */
@@ -45,6 +57,7 @@ IOperand::eOperandType		Double::getType(void) const {
 
 Double				&	Double::operator=(Double const & rhs) {
 
+	AOperand< double >::operator=(rhs);
 
 	return *this;
 

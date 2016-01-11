@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 16:13:54 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 18:00:28 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/11 18:37:48 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -89,8 +89,7 @@ IOperand	const			*	OperandFactory::createDouble(std::string const & value) const
 /*                                                                            */
 /* ************************************************************************** */
 
-OperandFactory				&	OperandFactory::operator=(OperandFactory const & rhs) {
-
+OperandFactory				&	OperandFactory::operator=(OperandFactory const &) {
 
 	return *this;
 
