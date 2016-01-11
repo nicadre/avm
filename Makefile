@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/11 14:27:05 by llapillo         ###   ########.fr        #
+#    Updated: 2016/01/11 18:17:56 by llapillo         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ NAME	=	avm
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++1z
+FLAGS	=	-Wall -Wextra -Werror -std=c++1z          -Wno-unused-parameter
 
 DSRC	=	./sources/
 
@@ -23,6 +23,12 @@ DOBJ	=	./objects/
 DINC	=	./includes/
 
 SRC		=	AOperand.template.cpp					\
+			Float.class.cpp							\
+			Double.class.cpp						\
+			Int8.class.cpp							\
+			Int16.class.cpp							\
+			Int32.class.cpp							\
+			OperandFactory.class.cpp				\
 			main.cpp
 
 OBJ		=	$(patsubst %.cpp, $(DOBJ)%.o, $(SRC))

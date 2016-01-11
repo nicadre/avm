@@ -14,12 +14,21 @@ Int32::Int32(Int32 const & src) {
 
 }
 
+Int32::Int32(std::string const & value) : AOperand< int32_t >(value, IOperand::eOperandType::Int32) {
+
+}
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                              Member Functions                              */
 /*                                                                            */
 /* ************************************************************************** */
 
+IOperand::eOperandType		Int32::getType(void) const {
+
+	return (IOperand::eOperandType::Int32);
+
+}
 
 /* ************************************************************************** */
 /*                                                                            */

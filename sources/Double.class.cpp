@@ -14,12 +14,21 @@ Double::Double(Double const & src) {
 
 }
 
+Double::Double(std::string const & value) : AOperand< double >(value, IOperand::eOperandType::Double) {
+
+}
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                              Member Functions                              */
 /*                                                                            */
 /* ************************************************************************** */
 
+IOperand::eOperandType		Double::getType(void) const {
+
+	return (IOperand::eOperandType::Double);
+
+}
 
 /* ************************************************************************** */
 /*                                                                            */

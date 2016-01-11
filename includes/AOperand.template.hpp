@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:16:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 15:52:52 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/11 18:18:38 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -21,6 +21,8 @@ class	AOperand : public IOperand {
 private:
 
 	T									_value;
+
+protected:
 
 	AOperand< T >();
 	AOperand< T >(AOperand< T > const & src);

@@ -14,12 +14,21 @@ Float::Float(Float const & src) {
 
 }
 
+Float::Float(std::string const & value) : AOperand< float >(value, IOperand::eOperandType::Float) {
+
+}
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                              Member Functions                              */
 /*                                                                            */
 /* ************************************************************************** */
 
+IOperand::eOperandType		Float::getType(void) const {
+
+	return (IOperand::eOperandType::Float);
+
+}
 
 /* ************************************************************************** */
 /*                                                                            */

@@ -1,4 +1,16 @@
-#include "Int16.class.hpp"
+// ************************************************************************** //
+//                                                                            //
+//                                                        :::      ::::::::   //
+//   OperandFactory.class.cpp                           :+:      :+:    :+:   //
+//                                                    +:+ +:+         +:+     //
+//   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
+//                                                +#+#+#+#+#+   +#+           //
+//   Created: 2016/01/11 16:13:54 by llapillo          #+#    #+#             //
+//   Updated: 2016/01/11 18:00:28 by llapillo         ###   ########.fr       //
+//                                                                            //
+// ************************************************************************** //
+
+#include "OperandFactory.class.hpp"
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -6,15 +18,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-Int16::Int16() {}
+OperandFactory::OperandFactory() {}
 
-Int16::Int16(Int16 const & src) {
+OperandFactory::OperandFactory(OperandFactory const & src) {
 
 	*this = src;
-
-}
-
-Int16::Int16(std::string const & value) : AOperand< int16_t >(value, IOperand::eOperandType::Int16) {
 
 }
 
@@ -24,9 +32,47 @@ Int16::Int16(std::string const & value) : AOperand< int16_t >(value, IOperand::e
 /*                                                                            */
 /* ************************************************************************** */
 
-IOperand::eOperandType		Int16::getType(void) const {
+OperandFactory	const	&	OperandFactory::sharedInstance(void) {
 
-	return (IOperand::eOperandType::Int16);
+	static	OperandFactory	fact;
+
+	return (fact);
+
+}
+
+IOperand	const			*	OperandFactory::createOperand(IOperand::eOperandType type, std::string const & value) const {
+
+	return (this->*(OperandFactory::funMap.at(type)))(value);
+
+}
+
+IOperand	const			*	OperandFactory::createInt8(std::string const & value) const {
+
+	return (new Int8(value));
+
+}
+
+IOperand	const			*	OperandFactory::createInt16(std::string const & value) const {
+
+	return (new Int16(value));
+
+}
+
+IOperand	const			*	OperandFactory::createInt32(std::string const & value) const {
+
+	return (new Int32(value));
+
+}
+
+IOperand	const			*	OperandFactory::createFloat(std::string const & value) const {
+
+	return (new Float(value));
+
+}
+
+IOperand	const			*	OperandFactory::createDouble(std::string const & value) const {
+
+	return (new Double(value));
 
 }
 
@@ -43,7 +89,7 @@ IOperand::eOperandType		Int16::getType(void) const {
 /*                                                                            */
 /* ************************************************************************** */
 
-Int16				&	Int16::operator=(Int16 const & rhs) {
+OperandFactory				&	OperandFactory::operator=(OperandFactory const & rhs) {
 
 
 	return *this;
@@ -56,7 +102,7 @@ Int16				&	Int16::operator=(Int16 const & rhs) {
 /*                                                                            */
 /* ************************************************************************** */
 
-Int16::~Int16() {}
+OperandFactory::~OperandFactory() {}
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -64,5 +110,14 @@ Int16::~Int16() {}
 /*                                                                            */
 /* ************************************************************************** */
 
+const std::map< IOperand::eOperandType, OperandFactory::funPtr > OperandFactory::funMap {
+
+	{IOperand::eOperandType::Int8, &OperandFactory::createInt8},
+	{IOperand::eOperandType::Int16, &OperandFactory::createInt16},
+	{IOperand::eOperandType::Int32, &OperandFactory::createInt32},
+	{IOperand::eOperandType::Float, &OperandFactory::createFloat},
+	{IOperand::eOperandType::Double, &OperandFactory::createDouble}
+
+};
 
 /* ************************************************************************** */
