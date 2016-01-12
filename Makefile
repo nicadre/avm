@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/11 18:34:53 by llapillo         ###   ########.fr        #
+#    Updated: 2016/01/12 15:07:14 by niccheva         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ NAME	=	avm
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++1z#          -Wno-unused-parameter
+FLAGS	=	-Wall -Wextra -Werror -std=c++1z -Wno-unused-private-field
 
 DSRC	=	./sources/
 
@@ -29,6 +29,8 @@ SRC		=	AOperand.template.cpp					\
 			Int16.class.cpp							\
 			Int32.class.cpp							\
 			OperandFactory.class.cpp				\
+			lexer/Command.class.cpp					\
+			lexer/Lexer.class.cpp					\
 			main.cpp
 
 OBJ		=	$(patsubst %.cpp, $(DOBJ)%.o, $(SRC))
@@ -41,6 +43,7 @@ $(NAME): $(OBJ)
 
 $(DOBJ)%.o: $(DSRC)%.cpp
 	@mkdir -p $(DOBJ)
+	@mkdir -p $(DOBJ)/lexer
 	@echo "\033[32m$< compiled:\t\033[0;m\c"
 	$(CC) $(FLAGS) -o $@ -c $< -I$(DINC)
 
