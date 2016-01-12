@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:16:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/12 10:13:10 by niccheva         ###   ########.fr       //
+//   Updated: 2016/01/12 12:50:53 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -23,6 +23,11 @@ private:
 	T									_value;
 	mutable	std::string					_str;
 
+	void								checkOutOfRange(long double d,
+														long double max,
+														long double min) throw();
+
+
 protected:
 
 	AOperand< T >();
@@ -32,7 +37,7 @@ protected:
 
 public:
 
-	AOperand< T >(std::string const & value, eOperandType const & type);
+	AOperand< T >(std::string const & value, eOperandType const & type) throw();
 
 	int									getPrecision(void) const;
 	virtual	eOperandType				getType(void) const = 0;
@@ -46,6 +51,51 @@ public:
 	IOperand				const	*	operator%(IOperand const & rhs) const;
 
 	virtual								~AOperand< T >();
+
+
+	// ************************************************************************** //
+	//                                 Exceptions                                 //
+	// ************************************************************************** //
+
+	class BadTypeException : public std::exception {
+
+	public:
+
+		virtual	char		const	*	what(void) const throw();
+
+	};
+
+	class OverflowException : public std::exception {
+
+	public:
+
+		virtual	char		const	*	what(void) const throw();
+
+	};
+
+	class UnderflowException : public std::exception {
+
+	public:
+
+		virtual	char		const	*	what(void) const throw();
+
+	};
+
+	class DivisionByZeroException : public std::exception {
+
+	public:
+
+		virtual	char		const	*	what(void) const throw();
+
+	};
+
+	class ModuloByZeroException : public std::exception {
+
+	public:
+
+		virtual	char		const	*	what(void) const throw();
+
+	};
 
 };
 

@@ -6,10 +6,11 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:21:24 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/12 10:25:23 by niccheva         ###   ########.fr       //
+//   Updated: 2016/01/12 12:54:00 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
+#include <cfloat>
 #include <cstdint>
 #include "AOperand.template.hpp"
 
@@ -30,28 +31,79 @@ AOperand< T >::AOperand(AOperand< T > const & src) {
 }
 
 template< typename T >
-AOperand< T >::AOperand(std::string const & value, eOperandType const & type) {
+AOperand< T >::AOperand(std::string const & value, IOperand::eOperandType const & type) throw() {
 
+	try {
 
-	(void)value;
-	(void)type;
-/* check under/overflow
+		long double	d = std::stold(value);
 
-  double d = std::stod(value); // return double, throw exception if under/overflow
-  if type == Int* {
-    if d - static_cast< long long >(d) != 0.0 {
-	  throw();
+		if (type == IOperand::eOperandType::Int8
+			|| type == IOperand::eOperandType::Int16
+			|| type == IOperand::eOperandType::Int32) {
+
+			if (d - static_cast< long long >(d) != 0.0) {
+
+				throw (AOperand< T >::BadTypeException());
+
+			}
+
+		}
+
+		switch (type) {
+
+		case IOperand::eOperandType::Int8:
+
+			checkOutOfRange(d, INT8_MIN, INT8_MAX);
+			break;
+
+		case IOperand::eOperandType::Int16:
+
+			checkOutOfRange(d, INT16_MIN, INT16_MAX);
+			break;
+
+		case IOperand::eOperandType::Int32:
+
+			checkOutOfRange(d, INT32_MIN, INT32_MAX);
+			break;
+
+		case IOperand::eOperandType::Float:
+
+			checkOutOfRange(d, FLT_MIN, FLT_MAX);
+			break;
+
+		case IOperand::eOperandType::Double:
+
+			checkOutOfRange(d, DBL_MIN, DBL_MAX);
+			break;
+
+		}
+
+		this->_value = static_cast< T >(d);
+
+	} catch (std::exception const & e) {
+
+		throw;
+
 	}
-  }
-  switch type {
-  case Int8:
-    if !(static_cast< double>(INT8_MIN) <= d <= static_cast< double>(INT8_MAX)) {
-	throw()
+
+}
+
+template< typename T>
+void							AOperand< T >::checkOutOfRange(long double d,
+												long double min,
+												long double max) throw() {
+
+	if (d < min) {
+
+		throw(AOperand< T >::UnderflowException());
+
 	}
-	this->_value = stoT(value);
-	...
-  }
- */
+
+	if (d > max) {
+
+		throw(AOperand< T >::OverflowException());
+
+	}
 
 }
 
@@ -133,7 +185,7 @@ AOperand< T >				&	AOperand< T >::operator=(AOperand< T > const &) {
 template< typename T >
 std::ostream				&	operator<<(std::ostream & o, AOperand< T > const & rhs) {
 
-	(void)rhs;
+	(void) rhs;
 
 	return	o;
 
@@ -147,6 +199,47 @@ std::ostream				&	operator<<(std::ostream & o, AOperand< T > const & rhs) {
 
 template< typename T >
 AOperand< T >::~AOperand() {}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                 Exceptions                                 */
+/*                                                                            */
+/* ************************************************************************** */
+
+template< typename T >
+char	const	*	AOperand< T >::BadTypeException::what() const throw() {
+
+	return "float value for integer value expected";
+
+}
+
+template< typename T >
+char	const	*	AOperand< T >::OverflowException::what() const throw() {
+
+	return "this value will overflow with the type specified";
+
+}
+
+template< typename T >
+char	const	*	AOperand< T >::UnderflowException::what() const throw() {
+
+	return "this value will underflow with the type specified";
+
+}
+
+template< typename T >
+char	const	*	AOperand< T >::DivisionByZeroException::what() const throw() {
+
+	return "division by zero isn't allowed";
+
+}
+
+template< typename T >
+char	const	*	AOperand< T >::ModuloByZeroException::what() const throw() {
+
+	return "modulo by zero isn't allowed";
+
+}
 
 /* ************************************************************************** */
 /*                                                                            */

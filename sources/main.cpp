@@ -6,9 +6,11 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:27:42 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 14:28:01 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/12 12:51:10 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
+
+#include "OperandFactory.class.hpp"
 
 int		main(void) {
 
