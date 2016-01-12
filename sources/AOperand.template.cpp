@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:21:24 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 16:24:30 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/12 10:25:23 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -35,8 +35,8 @@ AOperand< T >::AOperand(std::string const & value, eOperandType const & type) {
 
 	(void)value;
 	(void)type;
-// check under/overflow
-/*
+/* check under/overflow
+
   double d = std::stod(value); // return double, throw exception if under/overflow
   if type == Int* {
     if d - static_cast< long long >(d) != 0.0 {
@@ -52,6 +52,7 @@ AOperand< T >::AOperand(std::string const & value, eOperandType const & type) {
 	...
   }
  */
+
 }
 
 /* ************************************************************************** */
@@ -70,7 +71,7 @@ int								AOperand< T >::getPrecision(void) const {
 template< typename T >
 std::string			const	&	AOperand< T >::toString(void) const {
 
-	return *(new std::string);
+	return (this->_str);
 
 }
 
@@ -89,27 +90,37 @@ std::string			const	&	AOperand< T >::toString(void) const {
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator+(IOperand const & rhs) const {
+
 	return &rhs;
+
 }
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator-(IOperand const & rhs) const {
+
 	return &rhs;
+
 }
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator*(IOperand const & rhs) const {
+
 	return &rhs;
+
 }
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator/(IOperand const & rhs) const {
+
 	return &rhs;
+
 }
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator%(IOperand const & rhs) const {
+
 	return &rhs;
+
 }
 
 template< typename T >
@@ -121,9 +132,11 @@ AOperand< T >				&	AOperand< T >::operator=(AOperand< T > const &) {
 
 template< typename T >
 std::ostream				&	operator<<(std::ostream & o, AOperand< T > const & rhs) {
+
 	(void)rhs;
 
 	return	o;
+
 }
 
 /* ************************************************************************** */

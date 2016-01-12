@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 16:13:54 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 18:37:48 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/12 10:19:36 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -108,14 +108,13 @@ OperandFactory::~OperandFactory() {}
 /*                           Non Member Attributes                            */
 /*                                                                            */
 /* ************************************************************************** */
+OperandFactory::funArray	const		OperandFactory::funMap {
 
-const std::map< IOperand::eOperandType, OperandFactory::funPtr > OperandFactory::funMap {
-
-	{IOperand::eOperandType::Int8, &OperandFactory::createInt8},
-	{IOperand::eOperandType::Int16, &OperandFactory::createInt16},
-	{IOperand::eOperandType::Int32, &OperandFactory::createInt32},
-	{IOperand::eOperandType::Float, &OperandFactory::createFloat},
-	{IOperand::eOperandType::Double, &OperandFactory::createDouble}
+	{ IOperand::eOperandType::Int8,		&OperandFactory::createInt8 },
+	{ IOperand::eOperandType::Int16,	&OperandFactory::createInt16 },
+	{ IOperand::eOperandType::Int32,	&OperandFactory::createInt32 },
+	{ IOperand::eOperandType::Float,	&OperandFactory::createFloat },
+	{ IOperand::eOperandType::Double,	&OperandFactory::createDouble }
 
 };
 

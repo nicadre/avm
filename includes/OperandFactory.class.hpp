@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 16:10:27 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 18:37:29 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/12 10:23:40 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -25,9 +25,10 @@ class	OperandFactory {
 
 private:
 
-	typedef IOperand const  * (OperandFactory::*funPtr)(std::string const &) const;
+	typedef IOperand	const		*	(OperandFactory::*funPtr)(std::string const &) const;
+	typedef std::map< IOperand::eOperandType, OperandFactory::funPtr >	funArray;
 
-	static	const	std::map< IOperand::eOperandType, OperandFactory::funPtr > funMap;
+	static	funArray	const			funMap;
 
 	OperandFactory();
 	OperandFactory(OperandFactory const & src);

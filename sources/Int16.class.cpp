@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 18:36:01 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 18:36:10 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/12 10:21:16 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -26,9 +26,8 @@ Int16::Int16(Int16 const & src) {
 
 }
 
-Int16::Int16(std::string const & value) : AOperand< int16_t >(value, IOperand::eOperandType::Int16) {
-
-}
+Int16::Int16(std::string const & value) :
+	AOperand< int16_t >(value, IOperand::eOperandType::Int16) {}
 
 /* ************************************************************************** */
 /*                                                                            */

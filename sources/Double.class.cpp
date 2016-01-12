@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 18:36:49 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 18:36:59 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/12 10:23:10 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -26,9 +26,8 @@ Double::Double(Double const & src) {
 
 }
 
-Double::Double(std::string const & value) : AOperand< double >(value, IOperand::eOperandType::Double) {
-
-}
+Double::Double(std::string const & value) :
+	AOperand< double >(value, IOperand::eOperandType::Double) {}
 
 /* ************************************************************************** */
 /*                                                                            */
