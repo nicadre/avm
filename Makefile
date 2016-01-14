@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/12 15:07:14 by niccheva         ###   ########.fr        #
+#    Updated: 2016/01/14 17:47:13 by llapillo         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -31,6 +31,7 @@ SRC		=	AOperand.template.cpp					\
 			OperandFactory.class.cpp				\
 			lexer/Command.class.cpp					\
 			lexer/Lexer.class.cpp					\
+			Avm.class.cpp							\
 			main.cpp
 
 OBJ		=	$(patsubst %.cpp, $(DOBJ)%.o, $(SRC))
