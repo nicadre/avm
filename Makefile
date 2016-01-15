@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/15 08:11:36 by niccheva         ###   ########.fr        #
+#    Updated: 2016/01/15 08:27:17 by niccheva         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -30,7 +30,6 @@ SRC		=	AOperand.template.cpp					\
 			Int32.class.cpp							\
 			OperandFactory.class.cpp				\
 			lexer/Command.class.cpp					\
-			lexer/Lexer.class.cpp					\
 			Avm.class.cpp							\
 			main.cpp
 
