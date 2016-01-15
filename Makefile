@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/14 17:47:13 by llapillo         ###   ########.fr        #
+#    Updated: 2016/01/15 08:11:36 by niccheva         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ NAME	=	avm
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++1z -Wno-unused-private-field
+FLAGS	=	-Wall -Wextra -Werror -std=c++1z
 
 DSRC	=	./sources/
 
