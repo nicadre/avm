@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:30:06 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/14 16:07:33 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/15 11:17:38 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,35 +14,42 @@
 # define	AVM_CLASS_HPP
 
 # include <stack>
-# include "AOperand.template.hpp"
+# include "IOperand.interface.hpp"
 
-template< typename T >
 class	Avm {
 
 private:
 
-	std::stack< AOperand< T > >						_stack;
+	std::stack< IOperand const * >					_stack;
+
+	Avm(Avm const & src);
+
+	void											operation(IOperand const * (IOperand::*op)(IOperand const &) const);
+
+	Avm											&	operator=(Avm const &);
 
 public:
 
 	Avm();
-	Avm(Avm const & src);
 
+	void											push(IOperand const * operand);
+	void											pop(void) throw(Avm::EmptyStackException);
+	void											dump(void) const;
+	void											assert(IOperand const * operand) const throw(Avm::EmptyStackException,
+																								 Avm::AssertException);
 
-	void											push(AOperand< T > const operand);
-	void											pop(void) throw();
-	void											dump(void);
-	void											assert(AOperand< T > const operand) throw();
-
-	void											popOperation(AOperand< T > *op1, AOperand< T > *op2);
-	void											add(void) throw();
-	void											sub(void) throw();
-	void											mul(void) throw();
-	void											div(void) throw();
-	void											mod(void) throw();
-	void											print(void);
-
-	Avm											&	operator=(Avm const & rhs);
+	void											add(void) throw(Avm::EmptyStackException,
+																	Avm::NotSufficientValuesException);
+	void											sub(void) throw(Avm::EmptyStackException,
+																	Avm::NotSufficientValuesException);
+	void											mul(void) throw(Avm::EmptyStackException,
+																	Avm::NotSufficientValuesException);
+	void											div(void) throw(Avm::EmptyStackException,
+																	Avm::NotSufficientValuesException);
+	void											mod(void) throw(Avm::EmptyStackException,
+																	Avm::NotSufficientValuesException);
+	void											print(void) const throw(Avm::EmptyStackException,
+																			Avm::PrintException);
 
 	virtual											~Avm();
 

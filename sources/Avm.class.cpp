@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/14 16:33:31 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/15 11:18:16 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -18,11 +18,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-Avm< T >::Avm() {}
+Avm::Avm() {}
 
-template< typename T >
-Avm< T >::Avm(Avm const & src) {
+Avm::Avm(Avm const & src) {
 
 	*this = src;
 
@@ -34,119 +32,145 @@ Avm< T >::Avm(Avm const & src) {
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-void											Avm< T >::push(AOperand< T > const operand) {
+void											Avm::push(IOperand const * operand) {
+
 	this->_stack.push(operand);
+
 }
 
-template< typename T >
-void											Avm< T >::pop(void) throw() {
-	if (this->_stack.empty())
+void											Avm::pop(void) throw(Avm::EmptyStackException) {
+
+	IOperand	const	*	top;
+
+	if (this->_stack.empty()) {
+
 		throw (Avm::EmptyStackException());
+
+	}
+
+	top = this->_stack.top();
+
 	this->_stack.pop();
+	delete top;
+
 }
 
-template< typename T >
-void											Avm< T >::dump(void) {
-	std::stack< AOperand< T > >	tmp(this->_stack);
+void											Avm::dump(void) const {
+
+	std::stack< IOperand const * >	tmp(this->_stack);
 
 	while (!tmp.empty()) {
-		std::cout << tmp.top()._value << std::endl;
+
+		std::cout << tmp.top()->toString() << std::endl;
 		tmp.pop();
+
 	}
+
 }
 
-template< typename T >
-void											Avm< T >::assert(AOperand< T > const operand) throw() {
-	AOperand< T >	op(this->_stack.top());
+void											Avm::assert(IOperand const * operand) const throw(Avm::EmptyStackException,
+																								  Avm::AssertException) {
 
-	if (op.getType() != operand.getType() || op.toString() != operand.toString())
-		throw (Avm::AssertException());
-}
+	IOperand	const	*	op;
 
-template< typename T >
-void											Avm< T >::popOperation(AOperand< T > *op1, AOperand< T > *op2) {
-	if (this->_stack.empty())
+	if (this->_stack.empty()) {
+
 		throw (Avm::EmptyStackException());
-	else if (this->_stack.size() < 2)
+
+	}
+
+	op = this->_stack.top();
+	if (op->getType() != operand->getType() || op->toString() != operand->toString()) {
+
+		throw (Avm::AssertException());
+
+	}
+
+}
+
+void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &) const) {
+
+	IOperand	const	*	operand1;
+	IOperand	const	*	operand2;
+
+	if (this->_stack.empty()) {
+
+		throw (Avm::EmptyStackException());
+
+	} else if (this->_stack.size() < 2) {
+
 		throw (Avm::NotSufficientValuesException());
 
-	op1 = this->_stack.top();
+	}
+
+	operand1 = this->_stack.top();
 	this->_stack.pop();
-	op2 = this->_stack.top();
+	operand2 = this->_stack.top();
 	this->_stack.pop();
-}
 
-template< typename T >
-void											Avm< T >::add(void) throw() {
+	this->push((operand2->*(op))(*operand1));
 
-	AOperand< T >		op1;
-	AOperand< T >		op2;
-	AOperand< T >		result;
-
-	this->popOperation(&op1, &op2);
-	result = op1 + op2;
-	this->push(result);
-}
-
-template< typename T >
-void											Avm< T >::sub(void) throw() {
-	AOperand< T >		op1;
-	AOperand< T >		op2;
-	AOperand< T >		result;
-
-	this->popOperation(&op1, &op2);
-	result = op1 - op2;
-	this->push(result);
+	delete operand1;
+	delete operand2;
 
 }
 
-template< typename T >
-void											Avm< T >::mul(void) throw() {
-	AOperand< T >		op1;
-	AOperand< T >		op2;
-	AOperand< T >		result;
+void											Avm::add(void) throw(Avm::EmptyStackException,
+																	 Avm::NotSufficientValuesException) {
 
-	this->popOperation(&op1, &op2);
-	result = op1 * op2;
-	this->push(result);
+	this->operation(&IOperand::operator+);
 
 }
 
-template< typename T >
-void											Avm< T >::div(void) throw() {
-	AOperand< T >		op1;
-	AOperand< T >		op2;
-	AOperand< T >		result;
+void											Avm::sub(void) throw(Avm::EmptyStackException,
+																	 Avm::NotSufficientValuesException) {
 
-	this->popOperation(&op1, &op2);
-	result = op1 / op2;
-	this->push(result);
+	this->operation(&IOperand::operator-);
 
 }
 
-template< typename T >
-void											Avm< T >::mod(void) throw() {
-	AOperand< T >		op1;
-	AOperand< T >		op2;
-	AOperand< T >		result;
+void											Avm::mul(void) throw(Avm::EmptyStackException,
+																	 Avm::NotSufficientValuesException) {
 
-	this->popOperation(&op1, &op2);
-	result = op1 % op2;
-	this->push(result);
+	this->operation(&IOperand::operator*);
 
 }
 
-template< typename T >
-void											Avm< T >::print(void) {
-	AOperand< T >	op(this->_stack.top());
+void											Avm::div(void) throw(Avm::EmptyStackException,
+																	 Avm::NotSufficientValuesException) {
 
-	if (op.getType() != IOperand::eOperandType::Int8)
+	this->operation(&IOperand::operator/);
+
+}
+
+void											Avm::mod(void) throw(Avm::EmptyStackException,
+																	 Avm::NotSufficientValuesException) {
+
+	this->operation(&IOperand::operator%);
+
+}
+
+void											Avm::print(void) const throw(Avm::EmptyStackException,
+																			 Avm::PrintException) {
+
+	IOperand	const	*	op;
+
+	if (this->_stack.empty()) {
+
+		throw (Avm::EmptyStackException());
+
+	}
+
+	op = this->_stack.top();
+	if (op->getType() != IOperand::eOperandType::Int8) {
+
 		throw (Avm::PrintException());
 
-	std::cout << op << std::endl;
-}
+	}
 
+	std::cout << op << std::endl;
+
+}
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -161,10 +185,7 @@ void											Avm< T >::print(void) {
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-Avm< T >										&	Avm< T >::operator=(Avm const & rhs) {
-
-	this->_stack = rhs.stack();
+Avm										&	Avm::operator=(Avm const &) {
 
 	return *this;
 
@@ -176,8 +197,7 @@ Avm< T >										&	Avm< T >::operator=(Avm const & rhs) {
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-Avm< T >::~Avm() {}
+Avm::~Avm() {}
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -185,24 +205,28 @@ Avm< T >::~Avm() {}
 /*                                                                            */
 /* ************************************************************************** */
 
-template< typename T >
-char		const	*	Avm< T >::AssertException::what(void) const throw() {
+char		const	*	Avm::AssertException::what(void) const throw() {
+
 	return "the value at the top of the stack is not equal to the one passed as parameter";
+
 }
 
-template< typename T >
-char		const	*	Avm< T >::PrintException::what(void) const throw() {
+char		const	*	Avm::PrintException::what(void) const throw() {
+
 	return "the value at the top of the stack is not a 8-bit integer";
+
 }
 
-template< typename T >
-char		const	*	Avm< T >::NotSufficientValuesException::what(void) const throw() {
+char		const	*	Avm::NotSufficientValuesException::what(void) const throw() {
+
 	return "the stack haven't sufficient values";
+
 }
 
-template< typename T >
-char		const	*	Avm< T >::EmptyStackException::what(void) const throw() {
+char		const	*	Avm::EmptyStackException::what(void) const throw() {
+
 	return "the stack is empty";
+
 }
 
 /* ************************************************************************** */

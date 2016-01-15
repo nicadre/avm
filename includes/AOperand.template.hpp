@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:16:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/12 12:50:53 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/15 10:07:18 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -26,7 +26,6 @@ private:
 	void								checkOutOfRange(long double d,
 														long double max,
 														long double min) throw();
-
 
 protected:
 
