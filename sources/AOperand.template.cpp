@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:21:24 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/12 12:54:00 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/18 12:25:05 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -31,7 +31,7 @@ AOperand< T >::AOperand(AOperand< T > const & src) {
 }
 
 template< typename T >
-AOperand< T >::AOperand(std::string const & value, IOperand::eOperandType const & type) throw() {
+AOperand< T >::AOperand(std::string const & value, IOperand::eOperandType const & type) throw (AOperand< T >::BadTypeException, AOperand< T >::UnderflowException, AOperand< T >::OverflowException) {
 
 	try {
 
@@ -90,18 +90,19 @@ AOperand< T >::AOperand(std::string const & value, IOperand::eOperandType const 
 
 template< typename T>
 void							AOperand< T >::checkOutOfRange(long double d,
-												long double min,
-												long double max) throw() {
+															   long double min,
+															   long double max) throw (AOperand< T >::UnderflowException,
+																					  AOperand< T >::OverflowException) {
 
 	if (d < min) {
 
-		throw(AOperand< T >::UnderflowException());
+		throw (AOperand< T >::UnderflowException());
 
 	}
 
 	if (d > max) {
 
-		throw(AOperand< T >::OverflowException());
+		throw (AOperand< T >::OverflowException());
 
 	}
 
@@ -122,6 +123,8 @@ int								AOperand< T >::getPrecision(void) const {
 
 template< typename T >
 std::string			const	&	AOperand< T >::toString(void) const {
+
+	this->_str = std::to_string(this->_value);
 
 	return (this->_str);
 

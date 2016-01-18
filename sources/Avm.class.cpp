@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/15 11:18:16 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/18 12:09:11 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -38,7 +38,7 @@ void											Avm::push(IOperand const * operand) {
 
 }
 
-void											Avm::pop(void) throw(Avm::EmptyStackException) {
+void											Avm::pop(void) throw (Avm::EmptyStackException) {
 
 	IOperand	const	*	top;
 
@@ -68,7 +68,7 @@ void											Avm::dump(void) const {
 
 }
 
-void											Avm::assert(IOperand const * operand) const throw(Avm::EmptyStackException,
+void											Avm::assert(IOperand const * operand) const throw (Avm::EmptyStackException,
 																								  Avm::AssertException) {
 
 	IOperand	const	*	op;
@@ -88,7 +88,9 @@ void											Avm::assert(IOperand const * operand) const throw(Avm::EmptyStack
 
 }
 
-void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &) const) {
+void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &) const)
+	throw (Avm::EmptyStackException,
+		   Avm::NotSufficientValuesException) {
 
 	IOperand	const	*	operand1;
 	IOperand	const	*	operand2;
@@ -108,7 +110,15 @@ void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &)
 	operand2 = this->_stack.top();
 	this->_stack.pop();
 
-	this->push((operand2->*(op))(*operand1));
+	try {
+
+		this->push((operand2->*(op))(*operand1));
+
+	} catch (std::exception const & e) {
+
+		throw;
+
+	}
 
 	delete operand1;
 	delete operand2;

@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:48 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/12 15:22:30 by niccheva         ###   ########.fr       //
+//   Updated: 2016/01/18 14:11:45 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -26,7 +26,7 @@ Lexer::Lexer(Lexer const & src) : _input(std::cin) {
 
 }
 
-Lexer::Lexer(std::istream const & input) : _input(input) {}
+Lexer::Lexer(std::istream & input) : _input(input) {}
 
 /* ************************************************************************** */
 /*                                                                            */

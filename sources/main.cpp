@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:27:42 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/15 11:38:50 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/18 12:06:08 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -18,7 +18,7 @@ int		main(void) {
 	Avm		avm;
 
 	avm.push(OperandFactory::sharedInstance().createOperand(IOperand::eOperandType::Int8, "42"));
-	avm.push(OperandFactory::sharedInstance().createOperand(IOperand::eOperandType::Int16, "42"));
+//	avm.push(OperandFactory::sharedInstance().createOperand(IOperand::eOperandType::Int16, "42"));
 
 	try {
 

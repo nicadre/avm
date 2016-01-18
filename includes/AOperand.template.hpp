@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:16:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/15 10:07:18 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/18 12:37:58 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -25,7 +25,7 @@ private:
 
 	void								checkOutOfRange(long double d,
 														long double max,
-														long double min) throw();
+														long double min) throw (AOperand< T >::UnderflowException, AOperand< T >::OverflowException);
 
 protected:
 
@@ -36,7 +36,7 @@ protected:
 
 public:
 
-	AOperand< T >(std::string const & value, eOperandType const & type) throw();
+	AOperand< T >(std::string const & value, eOperandType const & type) throw (AOperand< T >::BadTypeException, AOperand< T >::UnderflowException, AOperand< T >::OverflowException);
 
 	int									getPrecision(void) const;
 	virtual	eOperandType				getType(void) const = 0;
@@ -51,7 +51,6 @@ public:
 
 	virtual								~AOperand< T >();
 
-
 	// ************************************************************************** //
 	//                                 Exceptions                                 //
 	// ************************************************************************** //
@@ -60,7 +59,7 @@ public:
 
 	public:
 
-		virtual	char		const	*	what(void) const throw();
+		virtual	char		const	*	what(void) const throw ();
 
 	};
 
@@ -68,7 +67,7 @@ public:
 
 	public:
 
-		virtual	char		const	*	what(void) const throw();
+		virtual	char		const	*	what(void) const throw ();
 
 	};
 
@@ -76,7 +75,7 @@ public:
 
 	public:
 
-		virtual	char		const	*	what(void) const throw();
+		virtual	char		const	*	what(void) const throw ();
 
 	};
 
@@ -84,7 +83,7 @@ public:
 
 	public:
 
-		virtual	char		const	*	what(void) const throw();
+		virtual	char		const	*	what(void) const throw ();
 
 	};
 
@@ -92,7 +91,7 @@ public:
 
 	public:
 
-		virtual	char		const	*	what(void) const throw();
+		virtual	char		const	*	what(void) const throw ();
 
 	};
 

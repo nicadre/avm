@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:55 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/12 15:14:46 by niccheva         ###   ########.fr       //
+//   Updated: 2016/01/18 14:21:39 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -25,11 +25,11 @@ private:
 	Lexer(Lexer const & src);
 
 	static  std::list< Command >			const		_commandList;
-	std::istream							const	&	_input;
+	std::istream									&	_input;
 
 public:
 
-	Lexer(std::istream const & input);
+	Lexer(std::istream & input);
 
 	void												lex(void) const;
 
