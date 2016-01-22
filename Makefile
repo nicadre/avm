@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/18 14:09:55 by llapillo         ###   ########.fr        #
+#    Updated: 2016/01/22 12:04:57 by llapillo         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,7 @@ NAME	=	avm
 
 CC		=	c++
 
-FLAGS	=	-Wall -Wextra -Werror -std=c++1z
+FLAGS	=	-Wall -Wextra -Werror -std=c++1z -Wno-\#pragma-messages
 
 DSRC	=	./sources/
 
@@ -46,7 +46,7 @@ $(DOBJ)%.o: $(DSRC)%.cpp
 	@mkdir -p $(DOBJ)
 	@mkdir -p $(DOBJ)/lexer
 	@echo "\033[32m$< compiled:\t\033[0;m\c"
-	$(CC) $(FLAGS) -o $@ -c $< -I$(DINC)
+	$(CC) $(FLAGS) -o $@ -c $< -I$(DINC) -I/nfs/zfs-student-4/users/llapillo/.brew/include
 
 clean:
 	rm -f $(OBJ)
