@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:27:42 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/22 15:16:35 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/22 15:59:40 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -47,7 +47,7 @@ bool	parse_numbers(Iterator first, Iterator last) {
 void	tokenInput(std::string const & input, std::string & cmd, std::string & type, std::string & value) {
 
 	std::vector< std::string >	tokens;
-	boost::split(tokens, input, boost::is_any_of(" "));
+	boost::split(tokens, input, boost::is_any_of(" "), boost::token_compress_on);
 
 	cmd = tokens[0];
 
@@ -56,6 +56,14 @@ void	tokenInput(std::string const & input, std::string & cmd, std::string & type
 		value = tokens[1].substr(tokens[1].find("(") + 1, tokens[1].size() - tokens[1].find("(") - 2);
 	}
 
+}
+
+void	trimInput(std::string & input) {
+	std::string	tmp;
+	size_t		start = input.find_first_not_of(" ");
+
+	tmp = input.substr(start);
+	input = tmp;
 }
 
 int		main(void) {
@@ -93,6 +101,7 @@ int		main(void) {
 		m = parse_numbers(str.begin(), str.end()) ? "succeed" : "fail";
 		std::cout << m << std::endl;
 		if (m == "succeed") {
+			trimInput(str);
 			tokenInput(str, cmd, type, value);
 			std::cout << cmd;
 			if (type != "")
