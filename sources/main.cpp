@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:27:42 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/22 15:59:40 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/22 16:13:54 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -58,14 +58,6 @@ void	tokenInput(std::string const & input, std::string & cmd, std::string & type
 
 }
 
-void	trimInput(std::string & input) {
-	std::string	tmp;
-	size_t		start = input.find_first_not_of(" ");
-
-	tmp = input.substr(start);
-	input = tmp;
-}
-
 int		main(void) {
 
 // 	Avm		avm;
@@ -101,8 +93,7 @@ int		main(void) {
 		m = parse_numbers(str.begin(), str.end()) ? "succeed" : "fail";
 		std::cout << m << std::endl;
 		if (m == "succeed") {
-			trimInput(str);
-			tokenInput(str, cmd, type, value);
+			tokenInput(str.substr(str.find_first_not_of(" ")), cmd, type, value);
 			std::cout << cmd;
 			if (type != "")
 				std::cout << " " << type << " ( " << value << " ) ";
