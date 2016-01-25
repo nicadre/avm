@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:27:42 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/25 12:37:12 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/25 17:34:41 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -44,7 +44,12 @@ int		main(int argc, char** argv) {
 	(void)argc;
 	Lexer	lex(input);
 
-	lex.lex();
+	try {
+		lex.lex();
+	}
+	catch (std::exception & e) {
+		std::cerr << e.what() << std::endl;
+	}
 
 	input.close();
 	return (0);

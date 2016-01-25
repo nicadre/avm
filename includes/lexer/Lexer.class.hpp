@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:55 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/25 15:14:10 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/25 18:16:57 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -20,8 +20,6 @@
 # include <boost/spirit/include/qi.hpp>
 # include <boost/spirit/include/qi_string.hpp>
 # include <boost/algorithm/string.hpp>
-# include <boost/spirit/include/qi_matches.hpp>
-#include <boost/spirit/include/qi_attr.hpp>
 # include <fstream>
 
 class	Lexer {
@@ -31,18 +29,21 @@ private:
 	Lexer();
 	Lexer(Lexer const & src);
 
-//	static  std::list< Command >			const		_commandList;
-	static  std::list< Command >						_commandList;
+	static  std::list< Command >			const		_commandList;
+//	static  std::list< Command >						_commandList;
 	std::istream									&	_input;
+//	std::list< std::string >							_commands();
+	int													_nbrErrors;
 
 public:
 
 	Lexer(std::istream & input);
 
-	void												lex(void) const;
+	void												lex(void) throw(Lexer::ErrorGeneratedException);
 	void												tokenInput(std::string const & input, std::string & cmd, std::string & type, std::string & value) const;
 	bool												parse_numbers(std::string::iterator first, std::string::iterator last) const;
 	void												detectError(std::string cmd, std::string type, std::string value) const throw(Lexer::CommandUnknowException, Lexer::NotEnoughParameterException, Lexer::TooManyParameterException, Lexer::BadTypeParameterException, Lexer::BadValueParameterException);
+	void												searchExitProgram(std::list< std::string > & commands) const throw(Lexer::MissingExitProgramException);
 
 	Lexer											&	operator=(Lexer const &);
 
@@ -96,6 +97,15 @@ public:
 
 	public:
 
+		virtual	char		const	*	what(void) const throw ();
+
+	};
+
+	class ErrorGeneratedException : public std::exception {
+	private:
+		std::string					const	_message;
+	public:
+		ErrorGeneratedException(std::string const & _message);
 		virtual	char		const	*	what(void) const throw ();
 
 	};

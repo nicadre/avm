@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:48 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/25 15:40:59 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/25 18:22:02 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -18,15 +18,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-Lexer::Lexer() : _input(std::cin) {}
+Lexer::Lexer() : _input(std::cin), _nbrErrors(0) {}
 
-Lexer::Lexer(Lexer const & src) : _input(std::cin) {
+Lexer::Lexer(Lexer const & src) : _input(std::cin), _nbrErrors(0) {
 
 	*this = src;
 
 }
 
-Lexer::Lexer(std::istream & input) : _input(input) {}
+Lexer::Lexer(std::istream & input) : _input(input), _nbrErrors(0) {}
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -34,43 +34,60 @@ Lexer::Lexer(std::istream & input) : _input(input) {}
 /*                                                                            */
 /* ************************************************************************** */
 
-void											Lexer::lex(void) const {
-	std::string		str;
-	int				line = 1;
-	bool			error = false;
-	int				str_begin = 0;
-	int				str_end = 0;
-	std::string		cmd = "";
-	std::string		type = "";
-	std::string		value = "";
+void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
+	std::string					str;
+	int							line = 1;
+	int							str_begin = 0;
+	int							str_end = 0;
+	std::string					str_clean = "";
+	std::string					cmd = "";
+	std::string					type = "";
+	std::string					value = "";
+	std::list< std::string >	commands;
 
 	while (std::getline(this->_input, str)) {
 		cmd = "";
 		type = "";
 		value = "";
 
-		if (str == "q" || str == "Q" || str == ";;")
+		if (str == ";;")
 			break ;
 		if (str == "")
 			continue ;
 
+		str_begin = str.find_first_not_of(" ");
+		str_end = (str.find_first_of(";") == std::string::npos) ? str.size() - str_begin : str.find_first_of(";");
+		str_clean = str.substr(str_begin, str_end);
 		if (!(this->parse_numbers(str.begin(), str.end()))) {
-			error = true;
 			try {
-				str_begin = str.find_first_not_of(" ");
-				str_end = (str.find_first_of(";") == std::string::npos) ? str.size() - str_begin : str.find_first_of(";");
-//				std::cout << "\n" << str_begin << " " << str_end << " " << str.substr(str_begin, str_end) << " " << str.find_first_of(";") << std ::endl;
-				this->tokenInput(str.substr(str_begin, str_end), cmd, type, value);
+				this->tokenInput(str_clean, cmd, type, value);
 				this->detectError(cmd, type, value);
 			}
 			catch (std::exception & e) {
 				std::cerr << "Error line " << std::to_string(line) << " : " << str << " : " << e.what() << std::endl;
 			}
+			_nbrErrors++;
+		}
+		else {
+			if (str_clean != "")
+				commands.push_back(str.substr(str_begin, str_end));
 		}
 		line++;
 	}
-	/* try catch search for exit program */
 
+	try {
+		this->searchExitProgram(commands);
+	}
+	catch ( std::exception & e) {
+		std::cerr << "Error file: " << e.what() << std::endl;
+		(this->_nbrErrors)++;
+	}
+
+	if (_nbrErrors > 0) {
+		throw (Lexer::ErrorGeneratedException(std::to_string(_nbrErrors) + " errors generated"));
+	}
+
+	//this->_commands = commands;
 	//std::cout << errors;
 
 	// std::string		s;
@@ -103,16 +120,13 @@ void	Lexer::tokenInput(std::string const & input, std::string & cmd, std::string
 	}
 
 }
+
+bool	Lexer::parse_numbers(std::string::iterator first, std::string::iterator last) const {
 	using boost::spirit::qi::double_;
 	using boost::spirit::qi::phrase_parse;
 	using boost::spirit::ascii::space;
 	using boost::spirit::ascii::string;
 	using boost::spirit::qi::char_;
-	using boost::spirit::qi::matches;
-	using boost::spirit::qi::attr;
-	using boost::spirit::qi::parse;
-
-bool	Lexer::parse_numbers(std::string::iterator first, std::string::iterator last) const {
 
 	auto commands_with_arguments = ((string("push") | string("assert")) >> ((string("int") >> (string("8") | string("16") | string("32"))) | string("float") | string("double")) >> char_('(') >> double_ >> char_(')'));
 	auto commands_without_args = (string("pop") | string("dump") | string("add") | string("sub") | string("mul") | string("div") | string("mod") | string("print") | string("exit"));
@@ -131,18 +145,20 @@ bool	Lexer::parse_numbers(std::string::iterator first, std::string::iterator las
 }
 
 void	Lexer::detectError(std::string cmd, std::string type, std::string value) const throw(Lexer::CommandUnknowException, Lexer::NotEnoughParameterException, Lexer::TooManyParameterException, Lexer::BadTypeParameterException, Lexer::BadValueParameterException) {
-	std::list< Command >::iterator  it = this->_commandList.begin();
-	bool							result = true;
-	std::string::iterator			bt = type.begin();
-	std::string::iterator			et = type.end();
-	std::string::iterator			bv = value.begin();
-	std::string::iterator			ev = value.end();
+	using boost::spirit::qi::parse;
+	using boost::spirit::ascii::string;
+	using boost::spirit::qi::char_;
+
+	std::list< Command >::const_iterator	it = this->_commandList.begin();
+	bool									result = true;
+	std::string::iterator					bt = type.begin();
+	std::string::iterator					et = type.end();
+	std::string::iterator					bv = value.begin();
+	std::string::iterator					ev = value.end();
 	auto types = (string("int8") | string("int16") | string("int32") | string("double") | string("float"));
 
-	while(it != this->_commandList.end()) {
+	while (it != this->_commandList.end()) {
 		if (cmd == it->name()) {
-
-//			std::cout << "(" << cmd << ")" << "(" << type << ")" << "(" << value << ")" << std::endl;
 
 			if ((it->arguments() && (type == "" || value == "")))
 				throw (Lexer::NotEnoughParameterException());
@@ -163,6 +179,17 @@ void	Lexer::detectError(std::string cmd, std::string type, std::string value) co
 	}
 	if (it == this->_commandList.end())
 		throw (Lexer::CommandUnknowException());
+}
+
+void	Lexer::searchExitProgram(std::list< std::string > & commands) const throw(Lexer::MissingExitProgramException) {
+	bool	exitProgram = false;
+
+	for (std::list< std::string >::const_iterator it = commands.begin(); it != commands.end(); it++) {
+		if (*it == "exit")
+			exitProgram = true;
+	}
+	if (!exitProgram)
+		throw (Lexer::MissingExitProgramException());
 }
 
 /* ************************************************************************** */
@@ -234,14 +261,22 @@ char	const	*	Lexer::MissingExitProgramException::what() const throw() {
 
 }
 
+Lexer::ErrorGeneratedException::ErrorGeneratedException(std::string const & message) : _message(message) { return ; }
+
+char	const	*	Lexer::ErrorGeneratedException::what() const throw() {
+
+	return (_message.c_str());
+
+}
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                           Non Member Attributes                            */
 /*                                                                            */
 /* ************************************************************************** */
 
-//std::list< Command >	const					Lexer::_commandList {
-std::list< Command >							Lexer::_commandList {
+//std::list< Command >							Lexer::_commandList {
+std::list< Command >	const					Lexer::_commandList {
 
 	Command("push", true),
 	Command("pop", false),
