@@ -7,12 +7,13 @@ push int32(33)
 
 add 00
 
-push ; float(44.55)
+push ;float(44.55)
+push float()
 
 mul
 
-push double(42.42)
-push int32(42)
+push poney(42.42)
+push int32(quarante_deux)
 
 dump
 
