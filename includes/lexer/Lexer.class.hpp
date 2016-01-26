@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:55 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/25 18:16:57 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/26 16:59:39 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -30,9 +30,8 @@ private:
 	Lexer(Lexer const & src);
 
 	static  std::list< Command >			const		_commandList;
-//	static  std::list< Command >						_commandList;
 	std::istream									&	_input;
-//	std::list< std::string >							_commands();
+	std::list< std::string >							_commands;
 	int													_nbrErrors;
 
 public:
@@ -44,6 +43,8 @@ public:
 	bool												parse_numbers(std::string::iterator first, std::string::iterator last) const;
 	void												detectError(std::string cmd, std::string type, std::string value) const throw(Lexer::CommandUnknowException, Lexer::NotEnoughParameterException, Lexer::TooManyParameterException, Lexer::BadTypeParameterException, Lexer::BadValueParameterException);
 	void												searchExitProgram(std::list< std::string > & commands) const throw(Lexer::MissingExitProgramException);
+
+	std::list< std::string >							getCommands(void) const;
 
 	Lexer											&	operator=(Lexer const &);
 

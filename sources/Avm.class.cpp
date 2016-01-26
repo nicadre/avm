@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/18 12:09:11 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/26 19:26:31 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -55,7 +55,7 @@ void											Avm::pop(void) throw (Avm::EmptyStackException) {
 
 }
 
-void											Avm::dump(void) const {
+void											Avm::dump(void) {
 
 	std::stack< IOperand const * >	tmp(this->_stack);
 
@@ -68,7 +68,7 @@ void											Avm::dump(void) const {
 
 }
 
-void											Avm::assert(IOperand const * operand) const throw (Avm::EmptyStackException,
+void											Avm::assert2(IOperand const * operand) throw (Avm::EmptyStackException,
 																								  Avm::AssertException) {
 
 	IOperand	const	*	op;
@@ -160,7 +160,7 @@ void											Avm::mod(void) throw(Avm::EmptyStackException,
 
 }
 
-void											Avm::print(void) const throw(Avm::EmptyStackException,
+void											Avm::print(void) throw(Avm::EmptyStackException,
 																			 Avm::PrintException) {
 
 	IOperand	const	*	op;
@@ -180,6 +180,27 @@ void											Avm::print(void) const throw(Avm::EmptyStackException,
 
 	std::cout << op << std::endl;
 
+}
+
+void											Avm::execCommands(Lexer const & lex) {
+	std::string					cmd = "";
+	std::string					type = "";
+	std::string					value = "";
+	std::list< std::string >	commands;
+
+	commands = lex.getCommands();
+	for (std::list< std::string >::const_iterator it = commands.begin(); it != commands.end(); it++) {
+		cmd = "";
+		type = "";
+		value = "";
+		lex.tokenInput(*it, cmd, type, value);
+		std::cout << *it << "(" << cmd << ")" << std::endl;
+		if (cmd == "push" || cmd == "assert")
+			(this->*(Avm::funMapArgs.at(cmd)))(OperandFactory::sharedInstance().createOperand(Avm::typesMap.at(type), value));
+		else
+			(this->*(Avm::funMap.at(cmd)))();
+		//std::cout << *it << " = " << cmd << " " << type << " " << value << std::endl;
+	}
 }
 
 /* ************************************************************************** */
@@ -245,5 +266,34 @@ char		const	*	Avm::EmptyStackException::what(void) const throw() {
 /*                                                                            */
 /* ************************************************************************** */
 
+Avm::funArrayArgs	const		Avm::funMapArgs {
+
+	{ "push",	&Avm::push },
+	{ "assert",	&Avm::assert2 }
+
+};
+
+Avm::funArray		const		Avm::funMap {
+
+	{ "pop",	&Avm::pop },
+	{ "dump",	&Avm::dump },
+	{ "add",	&Avm::add },
+	{ "sub",	&Avm::sub },
+	{ "mul",	&Avm::mul },
+	{ "div",	&Avm::div },
+	{ "mod",	&Avm::mod },
+	{ "print",	&Avm::print }
+
+};
+
+Avm::typesArray		const		Avm::typesMap {
+
+	{ "int8",	IOperand::eOperandType::Int8 },
+	{ "int16",	IOperand::eOperandType::Int16 },
+	{ "int32",	IOperand::eOperandType::Int32 },
+	{ "float",	IOperand::eOperandType::Float },
+	{ "double",	IOperand::eOperandType::Double }
+
+};
 
 /* ************************************************************************** */

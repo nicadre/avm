@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:48 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/25 18:22:02 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/26 18:55:50 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -36,7 +36,7 @@ Lexer::Lexer(std::istream & input) : _input(input), _nbrErrors(0) {}
 
 void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
 	std::string					str;
-	int							line = 1;
+	int							line = 0;
 	int							str_begin = 0;
 	int							str_end = 0;
 	std::string					str_clean = "";
@@ -46,6 +46,7 @@ void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
 	std::list< std::string >	commands;
 
 	while (std::getline(this->_input, str)) {
+		line++;
 		cmd = "";
 		type = "";
 		value = "";
@@ -72,7 +73,6 @@ void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
 			if (str_clean != "")
 				commands.push_back(str.substr(str_begin, str_end));
 		}
-		line++;
 	}
 
 	try {
@@ -87,24 +87,7 @@ void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
 		throw (Lexer::ErrorGeneratedException(std::to_string(_nbrErrors) + " errors generated"));
 	}
 
-	//this->_commands = commands;
-	//std::cout << errors;
-
-	// std::string		s;
-
-	// while (s != ";;") {
-
-	// 	std::getline(this->_input, s);
-
-	// 	if (this->_input.eof()) {
-
-	// 		break;
-
-	// 	}
-
-	// }
-	//(void)this->_input;
-
+	this->_commands = commands;
 }
 
 void	Lexer::tokenInput(std::string const & input, std::string & cmd, std::string & type, std::string & value) const {
@@ -192,6 +175,10 @@ void	Lexer::searchExitProgram(std::list< std::string > & commands) const throw(L
 		throw (Lexer::MissingExitProgramException());
 }
 
+std::list< std::string >							Lexer::getCommands(void) const {
+	return this->_commands;
+}
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                            Non Member Functions                            */
@@ -251,7 +238,7 @@ char	const	*	Lexer::BadTypeParameterException::what() const throw() {
 
 char	const	*	Lexer::BadValueParameterException::what() const throw() {
 
-	return "the type of the parameter isn't correct";
+	return "the value of the parameter isn't correct";
 
 }
 
@@ -275,7 +262,6 @@ char	const	*	Lexer::ErrorGeneratedException::what() const throw() {
 /*                                                                            */
 /* ************************************************************************** */
 
-//std::list< Command >							Lexer::_commandList {
 std::list< Command >	const					Lexer::_commandList {
 
 	Command("push", true),
