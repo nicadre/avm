@@ -2,6 +2,15 @@
 ; example.avm -
 ; -------------
 
+push int8(100)
+push int8(50)
+
+sub
+
+dump
+
+print
+
 push int32(42)
 push int32(33)
 

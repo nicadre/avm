@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 16:10:27 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/12 10:23:40 by niccheva         ###   ########.fr       //
+//   Updated: 2016/01/27 14:30:32 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,11 +15,6 @@
 
 # include <map>
 # include "IOperand.interface.hpp"
-# include "Int8.class.hpp"
-# include "Int16.class.hpp"
-# include "Int32.class.hpp"
-# include "Float.class.hpp"
-# include "Double.class.hpp"
 
 class	OperandFactory {
 

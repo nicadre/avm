@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:27:42 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/26 19:23:27 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/27 15:38:04 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -53,20 +53,8 @@ int		main(int argc, char** argv) {
 	try {
 		lex.lex();
 		avm.execCommands(lex);
-		//commands = lex.getCommands();
-		//for (std::list< std::string >::const_iterator it = commands.begin(); it != commands.end(); it++) {
-		//	cmd = "";
-		//	type = "";
-		//	value = "";
-		//	lex.tokenInput(*it, cmd, type, value);
-			//if (cmd == "push" || cmd == "assert")
-			//	avm.((Avm::funMapArgs.at(cmd))(OperandFactory::sharedInstance().createOperand(Avm::typesMap.at(type), value)));
-			//else
-			//	avm.((Avm::funMap.at(cmd))());
-			//std::cout << *it << " = " << cmd << " " << type << " " << value << std::endl;
-			//}
 	}
-	catch (std::exception & e) {
+	catch (std::exception const & e) {
 		std::cerr << e.what() << std::endl;
 	}
 

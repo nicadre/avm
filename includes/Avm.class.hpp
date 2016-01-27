@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:30:06 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/26 19:22:49 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/27 16:20:15 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -18,7 +18,7 @@
 # include <stack>
 # include "IOperand.interface.hpp"
 # include "lexer/Lexer.class.hpp"
-#include "OperandFactory.class.hpp"
+# include "OperandFactory.class.hpp"
 
 class	Avm {
 
@@ -38,9 +38,7 @@ private:
 
 	Avm(Avm const & src);
 
-	void											operation(IOperand const * (IOperand::*op)(IOperand const &) const)
-		throw (Avm::EmptyStackException,
-			   Avm::NotSufficientValuesException);
+	void											operation(IOperand const * (IOperand::*op)(IOperand const &) const);
 
 	Avm											&	operator=(Avm const &);
 
@@ -49,24 +47,16 @@ public:
 	Avm();
 
 	void											push(IOperand const * operand);
-	void											pop(void) throw (Avm::EmptyStackException);
+	void											pop(void);
 	void											dump(void);
-	void											assert2(IOperand const * operand)
-		throw (Avm::EmptyStackException,
-			   Avm::AssertException);
+	void											assertAvm(IOperand const * operand);
 
-	void											add(void) throw (Avm::EmptyStackException,
-																	Avm::NotSufficientValuesException);
-	void											sub(void) throw (Avm::EmptyStackException,
-																	Avm::NotSufficientValuesException);
-	void											mul(void) throw (Avm::EmptyStackException,
-																	Avm::NotSufficientValuesException);
-	void											div(void) throw (Avm::EmptyStackException,
-																	Avm::NotSufficientValuesException);
-	void											mod(void) throw (Avm::EmptyStackException,
-																	Avm::NotSufficientValuesException);
-	void											print(void) throw (Avm::EmptyStackException,
-																			Avm::PrintException);
+	void											add(void) ;
+	void											sub(void);
+	void											mul(void);
+	void											div(void);
+	void											mod(void);
+	void											print(void);
 
 	void											execCommands(Lexer const & lex);
 

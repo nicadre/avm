@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:48 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/26 18:55:50 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/27 11:23:36 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -84,7 +84,7 @@ void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
 	}
 
 	if (_nbrErrors > 0) {
-		throw (Lexer::ErrorGeneratedException(std::to_string(_nbrErrors) + " errors generated"));
+		throw (Lexer::ErrorGeneratedException(std::to_string(_nbrErrors) + " error(s) generated"));
 	}
 
 	this->_commands = commands;

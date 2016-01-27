@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:16:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/18 12:37:58 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/27 16:15:29 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -14,6 +14,9 @@
 # define	AOPERAND_TEMPLATE_HPP
 
 # include "IOperand.interface.hpp"
+# include "OperandFactory.class.hpp"
+
+class OperandFactory;
 
 template< typename T >
 class	AOperand : public IOperand {
@@ -25,7 +28,7 @@ private:
 
 	void								checkOutOfRange(long double d,
 														long double max,
-														long double min) throw (AOperand< T >::UnderflowException, AOperand< T >::OverflowException);
+														long double min);
 
 protected:
 
@@ -36,7 +39,7 @@ protected:
 
 public:
 
-	AOperand< T >(std::string const & value, eOperandType const & type) throw (AOperand< T >::BadTypeException, AOperand< T >::UnderflowException, AOperand< T >::OverflowException);
+	AOperand< T >(std::string const & value, eOperandType const & type);
 
 	int									getPrecision(void) const;
 	virtual	eOperandType				getType(void) const = 0;

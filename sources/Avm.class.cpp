@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/26 19:26:31 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/27 16:39:34 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -38,7 +38,7 @@ void											Avm::push(IOperand const * operand) {
 
 }
 
-void											Avm::pop(void) throw (Avm::EmptyStackException) {
+void											Avm::pop(void) {
 
 	IOperand	const	*	top;
 
@@ -68,8 +68,7 @@ void											Avm::dump(void) {
 
 }
 
-void											Avm::assert2(IOperand const * operand) throw (Avm::EmptyStackException,
-																								  Avm::AssertException) {
+void											Avm::assertAvm(IOperand const * operand) {
 
 	IOperand	const	*	op;
 
@@ -88,9 +87,7 @@ void											Avm::assert2(IOperand const * operand) throw (Avm::EmptyStackExce
 
 }
 
-void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &) const)
-	throw (Avm::EmptyStackException,
-		   Avm::NotSufficientValuesException) {
+void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &) const) {
 
 	IOperand	const	*	operand1;
 	IOperand	const	*	operand2;
@@ -125,43 +122,51 @@ void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &)
 
 }
 
-void											Avm::add(void) throw(Avm::EmptyStackException,
-																	 Avm::NotSufficientValuesException) {
+void											Avm::add(void) {
 
-	this->operation(&IOperand::operator+);
+	try {
+		this->operation(&IOperand::operator+);
+	}
+	catch (std::exception const & e) {
+
+		throw;
+
+	}
 
 }
 
-void											Avm::sub(void) throw(Avm::EmptyStackException,
-																	 Avm::NotSufficientValuesException) {
+void											Avm::sub(void) {
 
-	this->operation(&IOperand::operator-);
+	try {
+		this->operation(&IOperand::operator-);
+	}
+	catch (std::exception const & e) {
+
+		throw;
+
+	}
 
 }
 
-void											Avm::mul(void) throw(Avm::EmptyStackException,
-																	 Avm::NotSufficientValuesException) {
+void											Avm::mul(void) {
 
 	this->operation(&IOperand::operator*);
 
 }
 
-void											Avm::div(void) throw(Avm::EmptyStackException,
-																	 Avm::NotSufficientValuesException) {
+void											Avm::div(void) {
 
 	this->operation(&IOperand::operator/);
 
 }
 
-void											Avm::mod(void) throw(Avm::EmptyStackException,
-																	 Avm::NotSufficientValuesException) {
+void											Avm::mod(void) {
 
 	this->operation(&IOperand::operator%);
 
 }
 
-void											Avm::print(void) throw(Avm::EmptyStackException,
-																			 Avm::PrintException) {
+void											Avm::print(void) {
 
 	IOperand	const	*	op;
 
@@ -194,12 +199,20 @@ void											Avm::execCommands(Lexer const & lex) {
 		type = "";
 		value = "";
 		lex.tokenInput(*it, cmd, type, value);
-		std::cout << *it << "(" << cmd << ")" << std::endl;
-		if (cmd == "push" || cmd == "assert")
-			(this->*(Avm::funMapArgs.at(cmd)))(OperandFactory::sharedInstance().createOperand(Avm::typesMap.at(type), value));
-		else
-			(this->*(Avm::funMap.at(cmd)))();
-		//std::cout << *it << " = " << cmd << " " << type << " " << value << std::endl;
+		if (cmd == "exit")
+			return ;
+		//std::cout << "(" << cmd << ")" << std::endl;
+		try {
+			if (cmd == "push" || cmd == "assert")
+				(this->*(Avm::funMapArgs.at(cmd)))(OperandFactory::sharedInstance().createOperand(Avm::typesMap.at(type), value));
+			else
+				(this->*(Avm::funMap.at(cmd)))();
+		}
+		catch (std::exception const & e) {
+
+			throw;
+
+		}
 	}
 }
 
@@ -250,7 +263,7 @@ char		const	*	Avm::PrintException::what(void) const throw() {
 
 char		const	*	Avm::NotSufficientValuesException::what(void) const throw() {
 
-	return "the stack haven't sufficient values";
+	return "the stack hasn't sufficient values";
 
 }
 
@@ -269,7 +282,7 @@ char		const	*	Avm::EmptyStackException::what(void) const throw() {
 Avm::funArrayArgs	const		Avm::funMapArgs {
 
 	{ "push",	&Avm::push },
-	{ "assert",	&Avm::assert2 }
+	{ "assert",	&Avm::assertAvm }
 
 };
 
