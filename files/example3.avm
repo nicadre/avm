@@ -9,6 +9,7 @@ sub
 
 dump
 
+push int8(42)
 print
 
 push int32(42)

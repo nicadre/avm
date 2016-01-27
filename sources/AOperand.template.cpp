@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:21:24 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/27 16:40:46 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/27 17:53:09 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -145,59 +145,68 @@ std::string			const	&	AOperand< T >::toString(void) const {
 template< typename T >
 IOperand			const	*	AOperand< T >::operator+(IOperand const & rhs) const {
 
-	long double	result;
+	long double				result;
 	IOperand::eOperandType	type;
 
-	try {
-		type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
-		result	= this->_value + std::stold(rhs.toString());
-	//std::cout << "result " << this->_value << " + " << rhs.toString() << " " << result << " " << std::endl;
-		return (OperandFactory::sharedInstance().createOperand(type, std::to_string(result)));
-	}
-	catch (std::exception const & e) {
+	type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
+	result	= this->_value + std::stold(rhs.toString());
 
-		throw;
+	return (OperandFactory::sharedInstance().createOperand(type, std::to_string(result)));
 
-	}
 }
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator-(IOperand const & rhs) const {
 
-	long double	result;
+	long double				result;
 	IOperand::eOperandType	type;
 
-	try {
-		type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
-		result	= this->_value - std::stold(rhs.toString());
-		return (OperandFactory::sharedInstance().createOperand(type, std::to_string(result)));
-	}
-	catch (std::exception const & e) {
-
-		throw;
-
-	}
+	type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
+	result	= this->_value - std::stold(rhs.toString());
+	return (OperandFactory::sharedInstance().createOperand(type, std::to_string(result)));
 
 }
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator*(IOperand const & rhs) const {
 
-	return &rhs;
+	long double				result;
+	IOperand::eOperandType	type;
+
+	type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
+	result	= this->_value * std::stold(rhs.toString());
+	return (OperandFactory::sharedInstance().createOperand(type, std::to_string(result)));
 
 }
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator/(IOperand const & rhs) const {
 
-	return &rhs;
+	long double				result;
+	IOperand::eOperandType	type;
+
+	if (std::stoi(rhs.toString()) == 0)
+		throw (AOperand< T >::DivisionByZeroException());
+
+	type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
+	result	= this->_value / std::stold(rhs.toString());
+	return (OperandFactory::sharedInstance().createOperand(type, std::to_string(result)));
 
 }
 
 template< typename T >
 IOperand			const	*	AOperand< T >::operator%(IOperand const & rhs) const {
 
-	return &rhs;
+	long double				result;
+	IOperand::eOperandType	type;
+
+	if (std::stoi(rhs.toString()) == 0)
+		throw (AOperand< T >::DivisionByZeroException());
+	/* add modulo with float exception */
+
+	type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
+	result	= this->_value / std::stold(rhs.toString());
+	return (OperandFactory::sharedInstance().createOperand(type, std::to_string(result)));
 
 }
 

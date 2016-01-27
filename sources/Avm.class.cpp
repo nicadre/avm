@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/27 16:39:34 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/27 17:49:33 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -107,15 +107,7 @@ void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &)
 	operand2 = this->_stack.top();
 	this->_stack.pop();
 
-	try {
-
-		this->push((operand2->*(op))(*operand1));
-
-	} catch (std::exception const & e) {
-
-		throw;
-
-	}
+	this->push((operand2->*(op))(*operand1));
 
 	delete operand1;
 	delete operand2;
@@ -124,27 +116,13 @@ void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &)
 
 void											Avm::add(void) {
 
-	try {
-		this->operation(&IOperand::operator+);
-	}
-	catch (std::exception const & e) {
-
-		throw;
-
-	}
+	this->operation(&IOperand::operator+);
 
 }
 
 void											Avm::sub(void) {
 
-	try {
-		this->operation(&IOperand::operator-);
-	}
-	catch (std::exception const & e) {
-
-		throw;
-
-	}
+	this->operation(&IOperand::operator-);
 
 }
 
@@ -183,7 +161,7 @@ void											Avm::print(void) {
 
 	}
 
-	std::cout << op << std::endl;
+	std::cout << std::stoi(op->toString()) << std::endl;
 
 }
 
