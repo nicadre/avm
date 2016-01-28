@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:48 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/28 13:31:39 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 17:49:07 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -18,15 +18,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-Lexer::Lexer() : _input(std::cin), _nbrErrors(0) {}
+Lexer::Lexer() :  _nbrErrors(0) {}
 
-Lexer::Lexer(Lexer const & src) : _input(std::cin), _nbrErrors(0) {
+Lexer::Lexer(Lexer const & src) : _nbrErrors(0) {
 
 	*this = src;
 
 }
 
-Lexer::Lexer(std::istream & input) : _input(input), _nbrErrors(0) {}
+Lexer::Lexer(std::list< std::string > & input) : _input(input), _nbrErrors(0) {}
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -35,7 +35,6 @@ Lexer::Lexer(std::istream & input) : _input(input), _nbrErrors(0) {}
 /* ************************************************************************** */
 
 void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
-	std::string					str;
 	int							line = 0;
 	int							str_begin = 0;
 	int							str_end = 0;
@@ -45,33 +44,31 @@ void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
 	std::string					value = "";
 	std::list< std::string >	commands;
 
-	while (std::getline(this->_input, str)) {
+	for (std::list< std::string >::iterator it = this->_input.begin(); it != this->_input.end(); it++) {
 		line++;
 		cmd = "";
 		type = "";
 		value = "";
 
-		if (str == ";;")
-			break ;
-		if (str == "")
+		if ((*it) == "")
 			continue ;
 
-		str_begin = str.find_first_not_of(" ");
-		str_end = (str.find_first_of(";") == std::string::npos) ? str.size() - str_begin : str.find_first_of(";");
-		str_clean = str.substr(str_begin, str_end);
-		if (!(this->parse_numbers(str.begin(), str.end()))) {
+		str_begin = (*it).find_first_not_of(" ");
+		str_end = ((*it).find_first_of(";") == std::string::npos) ? (*it).size() - str_begin : (*it).find_first_of(";");
+		str_clean = (*it).substr(str_begin, str_end);
+		if (!(this->parse_numbers((*it).begin(), (*it).end()))) {
 			try {
 				this->tokenInput(str_clean, cmd, type, value);
 				this->detectError(cmd, type, value);
 			}
 			catch (std::exception & e) {
-				std::cerr << "Error line " << std::to_string(line) << " : " << str << " : " << e.what() << std::endl;
+				std::cerr << "Error line " << std::to_string(line) << " : " << (*it) << " : " << e.what() << std::endl;
 			}
 			_nbrErrors++;
 		}
 		else {
 			if (str_clean != "")
-				commands.push_back(std::to_string(line) + " " + str.substr(str_begin, str_end));
+				commands.push_back(std::to_string(line) + " " + (*it).substr(str_begin, str_end));
 		}
 	}
 

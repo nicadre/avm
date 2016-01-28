@@ -6,19 +6,20 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:30:06 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/28 13:39:33 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 16:32:53 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
 #ifndef		AVM_CLASS_HPP
 # define	AVM_CLASS_HPP
 
-# include <map>
-# include <list>
-# include <stack>
 # include "IOperand.interface.hpp"
 # include "lexer/Lexer.class.hpp"
 # include "OperandFactory.class.hpp"
+
+# include <map>
+# include <list>
+# include <stack>
 
 class	Avm {
 

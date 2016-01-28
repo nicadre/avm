@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:55 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/26 16:59:39 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 17:37:18 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -30,13 +30,13 @@ private:
 	Lexer(Lexer const & src);
 
 	static  std::list< Command >			const		_commandList;
-	std::istream									&	_input;
+	std::list< std::string >							_input;
 	std::list< std::string >							_commands;
 	int													_nbrErrors;
 
 public:
 
-	Lexer(std::istream & input);
+	Lexer(std::list< std::string > & input);
 
 	void												lex(void) throw(Lexer::ErrorGeneratedException);
 	void												tokenInput(std::string const & input, std::string & cmd, std::string & type, std::string & value) const;

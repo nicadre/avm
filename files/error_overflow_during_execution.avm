@@ -1,0 +1,10 @@
+; -------------
+; error_overflow_during_execution.avm -
+; -------------
+
+push int8(100)
+push int8(42)
+
+add
+
+exit
