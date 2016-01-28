@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:16:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/27 16:15:29 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 11:54:24 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -15,6 +15,7 @@
 
 # include "IOperand.interface.hpp"
 # include "OperandFactory.class.hpp"
+# include <math.h>
 
 class OperandFactory;
 
@@ -91,6 +92,14 @@ public:
 	};
 
 	class ModuloByZeroException : public std::exception {
+
+	public:
+
+		virtual	char		const	*	what(void) const throw ();
+
+	};
+
+	class ModuloWithFloatException : public std::exception {
 
 	public:
 

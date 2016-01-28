@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:21:24 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/27 17:53:09 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 11:54:40 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -202,10 +202,12 @@ IOperand			const	*	AOperand< T >::operator%(IOperand const & rhs) const {
 
 	if (std::stoi(rhs.toString()) == 0)
 		throw (AOperand< T >::DivisionByZeroException());
-	/* add modulo with float exception */
+	if (this->getType() == IOperand::eOperandType::Float ||
+		rhs.getType() == IOperand::eOperandType::Float)
+		throw (AOperand< T >::ModuloWithFloatException());
 
 	type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
-	result	= this->_value / std::stold(rhs.toString());
+	result	= fmod(this->_value, std::stold(rhs.toString()));
 	return (OperandFactory::sharedInstance().createOperand(type, std::to_string(result)));
 
 }
@@ -273,6 +275,13 @@ template< typename T >
 char	const	*	AOperand< T >::ModuloByZeroException::what() const throw() {
 
 	return "modulo by zero isn't allowed";
+
+}
+
+template< typename T >
+char	const	*	AOperand< T >::ModuloWithFloatException::what() const throw() {
+
+	return "modulo with float isn't allowed";
 
 }
 

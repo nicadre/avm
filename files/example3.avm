@@ -2,31 +2,30 @@
 ; example.avm -
 ; -------------
 
-push int8(100)
-push int8(50)
-
-sub
-
-dump
-
-push int8(42)
-print
-
-push int32(42)
-push int32(33)
+push int8(1)
+push int8(2)
 
 add
-
-push float(44.55)
-
-
-push double(42.42)
-push int32(42)
-
 dump
 
-pop
+push int8(1)
 
-assert double(42.42)
+sub
+dump
+
+push int8(3)
+
+mul
+dump
+
+push int8(2)
+
+div
+dump
+
+push int8(2)
+
+mod
+dump
 
 exit
