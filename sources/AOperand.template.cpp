@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:21:24 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/28 11:54:40 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 15:35:58 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -201,7 +201,7 @@ IOperand			const	*	AOperand< T >::operator%(IOperand const & rhs) const {
 	IOperand::eOperandType	type;
 
 	if (std::stoi(rhs.toString()) == 0)
-		throw (AOperand< T >::DivisionByZeroException());
+		throw (AOperand< T >::ModuloByZeroException());
 	if (this->getType() == IOperand::eOperandType::Float ||
 		rhs.getType() == IOperand::eOperandType::Float)
 		throw (AOperand< T >::ModuloWithFloatException());

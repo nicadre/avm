@@ -1,0 +1,11 @@
+; -------------
+; error_assert.avm -
+; -------------
+
+push int32(42)
+assert int32(33)
+
+push int8(42)
+assert int32(42)
+
+exit

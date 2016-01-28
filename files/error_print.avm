@@ -1,0 +1,8 @@
+; -------------
+; error_print.avm -
+; -------------
+
+push int32(42)
+print
+
+exit

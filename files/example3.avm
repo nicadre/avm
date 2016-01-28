@@ -2,7 +2,7 @@
 ; example.avm -
 ; -------------
 
-push int8(2)
+push int8(-2)
 push int8(2)
 
 add

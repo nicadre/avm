@@ -1,0 +1,8 @@
+; -------------
+; error_not_sufficient_values.avm -
+; -------------
+
+push int32(42)
+add
+
+exit

@@ -1,0 +1,7 @@
+; -------------
+; error_stack_empty.avm -
+; -------------
+
+pop ; stack empty
+
+exit

@@ -1,5 +1,5 @@
 ; -------------
-; example.avm -
+; errors_lexer.avm -
 ; -------------
 
 push int8(42.42)

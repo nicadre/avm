@@ -1,5 +1,5 @@
 ; -------------
-; example_without_exit.avm -
+; error_exit.avm -
 ; -------------
 
 push int32(42)
@@ -15,7 +15,3 @@ push double(42.42)
 push int32(42)
 
 dump
-
-pop
-
-assert double(42.42)

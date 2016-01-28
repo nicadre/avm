@@ -1,0 +1,9 @@
+; -------------
+; error_div.avm -
+; -------------
+
+push int32(42)
+push int32(0)
+div
+
+exit

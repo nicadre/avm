@@ -1,0 +1,9 @@
+; -------------
+; error_mod.avm -
+; -------------
+
+push int32(42)
+push int32(0)
+mod
+
+exit

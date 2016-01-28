@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/28 13:39:23 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 15:05:58 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -161,7 +161,7 @@ void											Avm::print(void) {
 
 	}
 
-	std::cout << std::stoi(op->toString()) << std::endl;
+	std::cout << static_cast< char >(std::stoi(op->toString())) << std::endl;
 
 }
 
