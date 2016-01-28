@@ -1,0 +1,7 @@
+; -------------
+; overflow.avm -
+; -------------
+
+push float(inf)
+
+exit
