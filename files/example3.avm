@@ -2,11 +2,12 @@
 ; example.avm -
 ; -------------
 
-push int8(1)
+push int8(2)
 push int8(2)
 
 add
 dump
+push int8(0.25);comments
 
 push int8(1)
 

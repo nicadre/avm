@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:48 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/27 11:23:36 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 13:31:39 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -71,7 +71,7 @@ void											Lexer::lex(void) throw(Lexer::ErrorGeneratedException) {
 		}
 		else {
 			if (str_clean != "")
-				commands.push_back(str.substr(str_begin, str_end));
+				commands.push_back(std::to_string(line) + " " + str.substr(str_begin, str_end));
 		}
 	}
 
@@ -168,7 +168,7 @@ void	Lexer::searchExitProgram(std::list< std::string > & commands) const throw(L
 	bool	exitProgram = false;
 
 	for (std::list< std::string >::const_iterator it = commands.begin(); it != commands.end(); it++) {
-		if (*it == "exit")
+		if ((*it).find("exit") != std::string::npos)
 			exitProgram = true;
 	}
 	if (!exitProgram)

@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/27 17:49:33 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/28 13:39:23 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -166,20 +166,25 @@ void											Avm::print(void) {
 }
 
 void											Avm::execCommands(Lexer const & lex) {
+	std::string					line = "";
 	std::string					cmd = "";
 	std::string					type = "";
 	std::string					value = "";
+	std::string					command = "";
 	std::list< std::string >	commands;
 
 	commands = lex.getCommands();
 	for (std::list< std::string >::const_iterator it = commands.begin(); it != commands.end(); it++) {
+		line = (*it).substr(0, (*it).find_first_of(" "));
 		cmd = "";
 		type = "";
 		value = "";
-		lex.tokenInput(*it, cmd, type, value);
+		command = ((*it).substr(line.size()));
+		command = command.substr(command.find_first_not_of(" "));
+		lex.tokenInput(command, cmd, type, value);
 		if (cmd == "exit")
 			return ;
-		//std::cout << "(" << cmd << ")" << std::endl;
+
 		try {
 			if (cmd == "push" || cmd == "assert")
 				(this->*(Avm::funMapArgs.at(cmd)))(OperandFactory::sharedInstance().createOperand(Avm::typesMap.at(type), value));
@@ -188,6 +193,7 @@ void											Avm::execCommands(Lexer const & lex) {
 		}
 		catch (std::exception const & e) {
 
+			std::cerr << "Error: line " << line << ": ";
 			throw;
 
 		}
