@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/22 12:04:57 by llapillo         ###   ########.fr        #
+#    Updated: 2016/01/29 14:58:59 by llapillo         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -39,6 +39,7 @@ OBJ		=	$(patsubst %.cpp, $(DOBJ)%.o, $(SRC))
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@brew install boost
 	@echo "\n\033[0;32m$(NAME) compiled:\t\033[0;m\c"
 	$(CC) $(FLAGS) -o $(NAME) $(OBJ)
 

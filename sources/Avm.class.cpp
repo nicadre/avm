@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/28 15:05:58 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/29 15:00:29 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -186,10 +186,15 @@ void											Avm::execCommands(Lexer const & lex) {
 			return ;
 
 		try {
+			std::cout << cmd;
+			if (type != "")
+				std::cout << " " << type << "(" << value << ")";
+			std::cout << "\n";
 			if (cmd == "push" || cmd == "assert")
 				(this->*(Avm::funMapArgs.at(cmd)))(OperandFactory::sharedInstance().createOperand(Avm::typesMap.at(type), value));
 			else
 				(this->*(Avm::funMap.at(cmd)))();
+			std::cout << std::endl;
 		}
 		catch (std::exception const & e) {
 

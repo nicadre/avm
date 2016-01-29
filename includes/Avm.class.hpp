@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/14 11:30:06 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/28 16:32:53 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/29 15:03:41 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -20,6 +20,7 @@
 # include <map>
 # include <list>
 # include <stack>
+# include <unistd.h>
 
 class	Avm {
 

@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:27:42 by llapillo          #+#    #+#             //
-/*   Updated: 2016/01/29 12:56:10 by llapillo         ###   ########.fr       */
+//   Updated: 2016/01/29 15:05:19 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -46,7 +46,7 @@ int		main(int argc, char** argv) {
  	Avm							avm;
 	std::list< std::string >	commands;
 
-	if (argc < 3) {
+	if (argc < 3 && access(argv[1], X_OK)) {
 		if (argc > 1) {
 			if (loadFile(commands, argv[1]))
 				return (1);

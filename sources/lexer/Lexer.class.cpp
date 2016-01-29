@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:48 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/28 17:49:07 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/29 15:30:33 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -108,7 +108,7 @@ bool	Lexer::parse_numbers(std::string::iterator first, std::string::iterator las
 	using boost::spirit::ascii::string;
 	using boost::spirit::qi::char_;
 
-	auto commands_with_arguments = ((string("push") | string("assert")) >> ((string("int") >> (string("8") | string("16") | string("32"))) | string("float") | string("double")) >> char_('(') >> double_ >> char_(')'));
+	auto commands_with_arguments = ((string("push") | string("assert")) >> *char_(' ') >> ((string("int") >> (string("8") | string("16") | string("32"))) | string("float") | string("double")) >> char_('(') >> double_ >> char_(')'));
 	auto commands_without_args = (string("pop") | string("dump") | string("add") | string("sub") | string("mul") | string("div") | string("mod") | string("print") | string("exit"));
 	auto comments = ';' >> *(char_);
 
@@ -229,7 +229,7 @@ char	const	*	Lexer::NotEnoughParameterException::what() const throw() {
 
 char	const	*	Lexer::BadTypeParameterException::what() const throw() {
 
-	return "the command's parameter haven't correct type";
+	return "the command's parameter hasn't correct type";
 
 }
 
