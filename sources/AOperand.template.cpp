@@ -6,7 +6,7 @@
 //   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/11 14:21:24 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/28 15:35:58 by llapillo         ###   ########.fr       //
+//   Updated: 2016/01/29 11:40:09 by llapillo         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -202,8 +202,8 @@ IOperand			const	*	AOperand< T >::operator%(IOperand const & rhs) const {
 
 	if (std::stoi(rhs.toString()) == 0)
 		throw (AOperand< T >::ModuloByZeroException());
-	if (this->getType() == IOperand::eOperandType::Float ||
-		rhs.getType() == IOperand::eOperandType::Float)
+	if ((this->toString()).find('.') != std::string::npos ||
+		(rhs.toString()).find('.') != std::string::npos)
 		throw (AOperand< T >::ModuloWithFloatException());
 
 	type = (this->getPrecision() >= rhs.getPrecision()) ? this->getType() : rhs.getType();
