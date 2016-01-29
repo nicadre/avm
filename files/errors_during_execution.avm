@@ -1,0 +1,37 @@
+; -------------
+; example2.avm -
+; -------------
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+push int8(-2)
+push int8(2)
+
+add
+dump;print 0
+
+push int8(2)
+
+sub
+dump
+
+push int8(3)
+
+mul
+dump
+
+pop
+pop
+pop
+
+push int8(2)
+
+div
+dump
+
+push int8(2)
+
+mod
+dump
+
+exit
