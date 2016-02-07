@@ -3,10 +3,10 @@
 //                                                        :::      ::::::::   //
 //   OperandFactory.class.cpp                           :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
-//   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
+//   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2016/01/11 16:13:54 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/27 14:30:45 by llapillo         ###   ########.fr       //
+//   Created: 2016/01/11 16:13:54 by niccheva          #+#    #+#             //
+//   Updated: 2016/02/07 16:08:38 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 

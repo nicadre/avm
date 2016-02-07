@@ -6,7 +6,7 @@
 //   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
 //   Created: 2016/01/12 14:11:55 by niccheva          #+#    #+#             //
-//   Updated: 2016/01/28 17:37:18 by llapillo         ###   ########.fr       //
+//   Updated: 2016/02/07 17:01:43 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -42,7 +42,6 @@ public:
 	void												tokenInput(std::string const & input, std::string & cmd, std::string & type, std::string & value) const;
 	bool												parse_numbers(std::string::iterator first, std::string::iterator last) const;
 	void												detectError(std::string cmd, std::string type, std::string value) const throw(Lexer::CommandUnknowException, Lexer::NotEnoughParameterException, Lexer::TooManyParameterException, Lexer::BadTypeParameterException, Lexer::BadValueParameterException);
-	void												searchExitProgram(std::list< std::string > & commands) const throw(Lexer::MissingExitProgramException);
 
 	std::list< std::string >							getCommands(void) const;
 
@@ -103,9 +102,13 @@ public:
 	};
 
 	class ErrorGeneratedException : public std::exception {
+
 	private:
+
 		std::string					const	_message;
+
 	public:
+
 		ErrorGeneratedException(std::string const & _message);
 		virtual	char		const	*	what(void) const throw ();
 

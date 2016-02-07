@@ -3,10 +3,10 @@
 //                                                        :::      ::::::::   //
 //   IOperand.interface.hpp                             :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
-//   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
+//   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2016/01/11 14:12:54 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/11 18:54:44 by llapillo         ###   ########.fr       //
+//   Created: 2016/01/11 14:12:54 by niccheva          #+#    #+#             //
+//   Updated: 2016/02/07 16:01:23 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 

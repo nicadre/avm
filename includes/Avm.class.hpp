@@ -3,10 +3,10 @@
 //                                                        :::      ::::::::   //
 //   Avm.class.hpp                                      :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
-//   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
+//   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2016/01/14 11:30:06 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/29 15:03:41 by llapillo         ###   ########.fr       //
+//   Created: 2016/01/14 11:30:06 by niccheva          #+#    #+#             //
+//   Updated: 2016/02/07 17:04:21 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -25,6 +25,7 @@
 class	Avm {
 
 private:
+
 	typedef void					(Avm::*funPtrArgs)(IOperand const *) ;
 	typedef void					(Avm::*funPtr)(void) ;
 
@@ -36,7 +37,7 @@ private:
 	static	funArray		const						funMap;
 	static	typesArray		const						typesMap;
 
-	std::stack< IOperand const * >					_stack;
+	std::list< IOperand const * >						_list;
 
 	Avm(Avm const & src);
 

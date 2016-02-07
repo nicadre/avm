@@ -3,10 +3,10 @@
 //                                                        :::      ::::::::   //
 //   Avm.class.cpp                                      :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
-//   By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+        //
+//   By: niccheva <niccheva@student.42.fr>          +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2016/01/14 11:29:59 by llapillo          #+#    #+#             //
-//   Updated: 2016/01/29 15:00:29 by llapillo         ###   ########.fr       //
+//   Created: 2016/01/14 11:29:59 by niccheva          #+#    #+#             //
+//   Updated: 2016/02/07 17:13:30 by niccheva         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
@@ -34,7 +34,7 @@ Avm::Avm(Avm const & src) {
 
 void											Avm::push(IOperand const * operand) {
 
-	this->_stack.push(operand);
+	this->_list.push_front(operand);
 
 }
 
@@ -42,29 +42,26 @@ void											Avm::pop(void) {
 
 	IOperand	const	*	top;
 
-	if (this->_stack.empty()) {
+	if (this->_list.empty()) {
 
 		throw (Avm::EmptyStackException());
 
 	}
 
-	top = this->_stack.top();
+	top = this->_list.front();
 
-	this->_stack.pop();
+	this->_list.pop_front();
 	delete top;
 
 }
 
 void											Avm::dump(void) {
 
-	std::stack< IOperand const * >	tmp(this->_stack);
+	for_each(this->_list.begin(), this->_list.end(), [] (IOperand const * op) {
 
-	while (!tmp.empty()) {
+			std::cout << op->toString() << std::endl;
 
-		std::cout << tmp.top()->toString() << std::endl;
-		tmp.pop();
-
-	}
+		});
 
 }
 
@@ -72,13 +69,13 @@ void											Avm::assertAvm(IOperand const * operand) {
 
 	IOperand	const	*	op;
 
-	if (this->_stack.empty()) {
+	if (this->_list.empty()) {
 
 		throw (Avm::EmptyStackException());
 
 	}
 
-	op = this->_stack.top();
+	op = this->_list.front();
 	if (op->getType() != operand->getType() || op->toString() != operand->toString()) {
 
 		throw (Avm::AssertException());
@@ -92,20 +89,20 @@ void											Avm::operation(IOperand const * (IOperand::*op)(IOperand const &)
 	IOperand	const	*	operand1;
 	IOperand	const	*	operand2;
 
-	if (this->_stack.empty()) {
+	if (this->_list.empty()) {
 
 		throw (Avm::EmptyStackException());
 
-	} else if (this->_stack.size() < 2) {
+	} else if (this->_list.size() < 2) {
 
 		throw (Avm::NotSufficientValuesException());
 
 	}
 
-	operand1 = this->_stack.top();
-	this->_stack.pop();
-	operand2 = this->_stack.top();
-	this->_stack.pop();
+	operand1 = this->_list.front();
+	this->_list.pop_front();
+	operand2 = this->_list.front();
+	this->_list.pop_front();
 
 	this->push((operand2->*(op))(*operand1));
 
@@ -148,13 +145,13 @@ void											Avm::print(void) {
 
 	IOperand	const	*	op;
 
-	if (this->_stack.empty()) {
+	if (this->_list.empty()) {
 
 		throw (Avm::EmptyStackException());
 
 	}
 
-	op = this->_stack.top();
+	op = this->_list.front();
 	if (op->getType() != IOperand::eOperandType::Int8) {
 
 		throw (Avm::PrintException());
@@ -175,6 +172,7 @@ void											Avm::execCommands(Lexer const & lex) {
 
 	commands = lex.getCommands();
 	for (std::list< std::string >::const_iterator it = commands.begin(); it != commands.end(); it++) {
+
 		line = (*it).substr(0, (*it).find_first_of(" "));
 		cmd = "";
 		type = "";
@@ -182,27 +180,41 @@ void											Avm::execCommands(Lexer const & lex) {
 		command = ((*it).substr(line.size()));
 		command = command.substr(command.find_first_not_of(" "));
 		lex.tokenInput(command, cmd, type, value);
-		if (cmd == "exit")
+		if (cmd == "exit") {
+
 			return ;
 
-		try {
-			std::cout << cmd;
-			if (type != "")
-				std::cout << " " << type << "(" << value << ")";
-			std::cout << "\n";
-			if (cmd == "push" || cmd == "assert")
-				(this->*(Avm::funMapArgs.at(cmd)))(OperandFactory::sharedInstance().createOperand(Avm::typesMap.at(type), value));
-			else
-				(this->*(Avm::funMap.at(cmd)))();
-			std::cout << std::endl;
 		}
-		catch (std::exception const & e) {
+
+		try {
+
+			if (type != "") {
+
+
+			}
+
+
+			if (cmd == "push" || cmd == "assert") {
+
+				(this->*(Avm::funMapArgs.at(cmd)))(OperandFactory::sharedInstance().createOperand(Avm::typesMap.at(type), value));
+
+			} else {
+
+				(this->*(Avm::funMap.at(cmd)))();
+
+			}
+
+		} catch (std::exception const & e) {
 
 			std::cerr << "Error: line " << line << ": ";
 			throw;
 
 		}
+
 	}
+
+	std::cout << "Error: exit program not found" << std::endl;
+
 }
 
 /* ************************************************************************** */

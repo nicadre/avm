@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/01/29 14:58:59 by llapillo         ###   ########.fr        #
+#    Updated: 2016/02/07 16:04:15 by niccheva         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -47,7 +47,7 @@ $(DOBJ)%.o: $(DSRC)%.cpp
 	@mkdir -p $(DOBJ)
 	@mkdir -p $(DOBJ)/lexer
 	@echo "\033[32m$< compiled:\t\033[0;m\c"
-	$(CC) $(FLAGS) -o $@ -c $< -I$(DINC) -I/nfs/zfs-student-4/users/llapillo/.brew/include
+	$(CC) $(FLAGS) -o $@ -c $< -I$(DINC) -I/Users/niccheva/.brew/include
 
 clean:
 	rm -f $(OBJ)
