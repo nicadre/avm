@@ -6,7 +6,7 @@
 #    By: llapillo <llapillo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/11 14:26:45 by llapillo          #+#    #+#              #
-#    Updated: 2016/02/07 16:04:15 by niccheva         ###   ########.fr        #
+#    Updated: 2016/02/08 11:38:26 by niccheva         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -39,7 +39,6 @@ OBJ		=	$(patsubst %.cpp, $(DOBJ)%.o, $(SRC))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@brew install boost
 	@echo "\n\033[0;32m$(NAME) compiled:\t\033[0;m\c"
 	$(CC) $(FLAGS) -o $(NAME) $(OBJ)
 
@@ -47,7 +46,7 @@ $(DOBJ)%.o: $(DSRC)%.cpp
 	@mkdir -p $(DOBJ)
 	@mkdir -p $(DOBJ)/lexer
 	@echo "\033[32m$< compiled:\t\033[0;m\c"
-	$(CC) $(FLAGS) -o $@ -c $< -I$(DINC) -I/Users/niccheva/.brew/include
+	$(CC) $(FLAGS) -o $@ -c $< -I$(DINC) -I/nfs/zfs-student-3/users/niccheva/.brew/include
 
 clean:
 	rm -f $(OBJ)
